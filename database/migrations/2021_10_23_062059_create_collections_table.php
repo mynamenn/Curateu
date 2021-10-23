@@ -19,7 +19,6 @@ class CreateCollectionsTable extends Migration
             $table->string('description');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('item_id')->constrained()->onDelete('cascade');
-            $table->integer('order');
             $table->timestamps();
         });
     }

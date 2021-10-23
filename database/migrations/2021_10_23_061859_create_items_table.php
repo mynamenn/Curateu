@@ -19,7 +19,6 @@ class CreateItemsTable extends Migration
             $table->string('description');
             $table->string('photo');
             $table->string('link');
-            $table->integer('order');
             $table->timestamps();
         });
     }
