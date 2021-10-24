@@ -14,6 +14,6 @@ class FollowTableSeeder extends Seeder
      */
     public function run()
     {
-        $follows = Follow::factory()->count(10)->create();
+        Follow::factory()->count(10)->create();
     }
 }

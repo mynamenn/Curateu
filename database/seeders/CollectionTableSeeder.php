@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Collection;
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 
 class CollectionTableSeeder extends Seeder
@@ -14,6 +15,6 @@ class CollectionTableSeeder extends Seeder
      */
     public function run()
     {
-        $collections = Collection::factory()->count(30)->create();
+        Collection::factory(10)->hasItems(1)->create();
     }
 }

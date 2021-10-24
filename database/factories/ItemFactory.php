@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Collection;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,6 +27,7 @@ class ItemFactory extends Factory
             'description' => $this->faker->sentence($nbWords = 8),
             'photo' => $this->faker->imageUrl($width = 640, $height = 480),
             'link' => $this->faker->url(),
+            'collection_id' => Collection::inRandomOrder()->first()->id,
         ];
     }
 }
