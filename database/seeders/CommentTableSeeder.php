@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Collection;
 use App\Models\Comment;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,6 @@ class CommentTableSeeder extends Seeder
      */
     public function run()
     {
-        Comment::factory()->count(30)->create();
+        Comment::factory()->count(50)->create();
     }
 }

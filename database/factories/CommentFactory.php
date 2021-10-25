@@ -25,11 +25,18 @@ class CommentFactory extends Factory
     public function definition()
     {
         $commentables = [
-            Collection::class,
-            Item::class,
+            'App\Collection',
+            'App\Item',
         ];
         $commentableType = $this->faker->randomElement($commentables);
-        $commentableId = $commentableType::factory()->create()->id;
+
+        $commentableId = '';
+        if ($commentableType === 'App\Collection') {
+            $commentableId = Collection::inRandomOrder()->first()->id;
+        } else {
+            $commentableId = Item::inRandomOrder()->first()->id;
+        }
+        
 
         return [
             'comment' => $this->faker->sentence($nbWords = 8),
