@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleTableSeeder::class);
         $this->call(UserTableSeeder::class);
-        $this->call(CollectionTableSeeder::class); // Each collection has at least 1 item and tag.
-        $this->call(ItemTableSeeder::class); // Each item is randomly assigned to a collection.
+        $this->call(CollectionTableSeeder::class);
+        $this->call(ItemTableSeeder::class);
         $this->call(TagTableSeeder::class);
-        $this->call(CollectionTagSeeder::class); // Create many to many relationship.
-        $this->call(CommentTableSeeder::class); // Create comments for collections and items. 
+        $this->call(CollectionTagSeeder::class);
+        $this->call(CommentTableSeeder::class);
         $this->call(LikeTableSeeder::class);
         $this->call(FollowerTableSeeder::class);
     }

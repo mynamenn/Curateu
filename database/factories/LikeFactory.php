@@ -25,13 +25,14 @@ class LikeFactory extends Factory
     public function definition()
     {
         $likeables = [
-            'App\Collection',
-            'App\Item',
+            Collection::class,
+            Item::class,
         ];
+        // Selects either Collection or Item.
         $likeableType = $this->faker->randomElement($likeables);
         
         $likeableId = '';
-        if ($likeableType === 'App\Collection') {
+        if ($likeableType === Collection::class) {
             $likeableId = Collection::inRandomOrder()->first()->id;
         } else {
             $likeableId = Item::inRandomOrder()->first()->id;
@@ -39,8 +40,8 @@ class LikeFactory extends Factory
 
         return [
             'user_id' => User::inRandomOrder()->first()->id,
-            'likeable_type' => $likeableType, // App\Models\Collection or App\Models\Item
-            'likeable_id' => $likeableId, // collection_id or item_id
+            'likeable_type' => $likeableType, // Either App\Models\Collection or App\Models\Item
+            'likeable_id' => $likeableId, // Either 'collection_id' or 'item_id'
         ];
     }
 }

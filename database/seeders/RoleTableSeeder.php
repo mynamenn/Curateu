@@ -20,7 +20,7 @@ class RoleTableSeeder extends Seeder
             'moderator' => 'Moderator can remove posts', 
             'admin' => 'Admin can do all of the above and add tags'
         ];
-
+        // Create Role from the roles array.
         foreach($roles as $role=>$description) {
             Role::factory()->state([
                 'name' => $role,

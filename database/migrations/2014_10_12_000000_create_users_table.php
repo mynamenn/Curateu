@@ -16,16 +16,16 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('role_id')->constrained()->onDelete('cascade');
+            $table->foreignId('role_id');
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->string('headline');
-            $table->string('profile_picture'); // Url to profile picture.
-            $table->string('cover_picture'); // Url to cover picture
-            $table->string('website');
+            $table->string('headline')->nullable();
+            $table->string('profile_picture')->nullable(); // URL to profile picture.
+            $table->string('cover_picture')->nullable(); // URL to cover picture
+            $table->string('website')->nullable();
             $table->timestamps();
         });
     }
@@ -37,10 +37,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {  
-            $table->dropForeign(['role_id']);
-        });
-
         Schema::dropIfExists('users');
     }
 }

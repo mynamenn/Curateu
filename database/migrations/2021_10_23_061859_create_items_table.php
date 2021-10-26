@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->foreignId('collection_id')->constrained()->onDelete('cascade');
             $table->string('description');
-            $table->string('photo');
+            $table->string('photo'); // URL to photo.
             $table->string('link');
             $table->timestamps();
         });
@@ -31,10 +31,6 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
-        Schema::table('collections', function (Blueprint $table) {  
-            $table->dropForeign(['collection_id']);
-        });
-
         Schema::dropIfExists('items');
     }
 }

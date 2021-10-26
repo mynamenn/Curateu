@@ -17,7 +17,7 @@ class CreateFollowersTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('following_id')->constrained('users')->onDelete('cascade');
-            $table->softDeletes(); // To know when user unfollowed a person so won't send notifications.
+            $table->softDeletes(); // Time of unfollowing action.
             $table->timestamps();
         });
     }
@@ -29,11 +29,6 @@ class CreateFollowersTable extends Migration
      */
     public function down()
     {
-        Schema::table('followers', function (Blueprint $table) {  
-            $table->dropForeign(['user_id']);
-            $table->dropForeign(['following_id']);
-        });
-
         Schema::dropIfExists('followers');
     }
 }

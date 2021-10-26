@@ -26,7 +26,8 @@ class FollowerFactory extends Factory
         $userId = User::inRandomOrder()->first()->id;
         $followingId = User::inRandomOrder()->first()->id;
 
-        // Update followingId if it's the same as userId or (userId, followingId) already exists in Follower table.
+        // Keep updating followingId if it's the same as userId or (userId, followingId) 
+        // already exists in Follower table.
         while ($followingId === $userId || 
         Follower::where([['user_id', '=', $userId], ['following_id', '=', $followingId]])->exists()) {
             $followingId = User::inRandomOrder()->first()->id;

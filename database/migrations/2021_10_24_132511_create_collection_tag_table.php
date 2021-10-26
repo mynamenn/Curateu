@@ -28,6 +28,6 @@ class CreateCollectionTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collections_tags');
+        Schema::dropIfExists('collection_tag');
     }
 }

@@ -16,8 +16,8 @@ class CreateLikesTable extends Migration
         Schema::create('likes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->morphs('likeable'); // Adds unsighned integer likeable_id and string likeable_type (Collection, Item).
-            $table->softDeletes(); // To know when user unlike a post so won't send notifications.
+            $table->morphs('likeable'); // This includes 'likeable_id' and 'likeable_type'.
+            $table->softDeletes(); // Time of unliking action.
             $table->timestamps();
         });
     }
@@ -29,11 +29,6 @@ class CreateLikesTable extends Migration
      */
     public function down()
     {
-        Schema::table('likes', function (Blueprint $table) {  
-            $table->dropForeign(['user_id']);
-            $table->dropMorphs('likeable');	
-        });
-
         Schema::dropIfExists('likes');
     }
 }

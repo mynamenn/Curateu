@@ -17,8 +17,8 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->string('comment');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->morphs('commentable');
-            $table->softDeletes();
+            $table->morphs('commentable'); // This includes 'commentable_id' and 'commentable_type'.
+            $table->softDeletes(); // Time of deletion of comment.
             $table->timestamps();
         });
     }
@@ -30,11 +30,6 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('comments', function (Blueprint $table) {  
-            $table->dropForeign(['user_id']);
-            $table->dropMorphs('commentable');	
-        });
-
         Schema::dropIfExists('comments');
     }
 }

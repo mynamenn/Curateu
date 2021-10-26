@@ -25,13 +25,14 @@ class CommentFactory extends Factory
     public function definition()
     {
         $commentables = [
-            'App\Collection',
-            'App\Item',
+            Collection::class,
+            Item::class,
         ];
+        // Selects either Collection or Item.
         $commentableType = $this->faker->randomElement($commentables);
 
         $commentableId = '';
-        if ($commentableType === 'App\Collection') {
+        if ($commentableType === Collection::class) {
             $commentableId = Collection::inRandomOrder()->first()->id;
         } else {
             $commentableId = Item::inRandomOrder()->first()->id;
@@ -41,8 +42,8 @@ class CommentFactory extends Factory
         return [
             'comment' => $this->faker->sentence($nbWords = 8),
             'user_id' => User::inRandomOrder()->first()->id,
-            'commentable_type' => $commentableType, // App\Models\Collection or App\Models\Item
-            'commentable_id' => $commentableId, // collection_id or item_id
+            'commentable_type' => $commentableType, // Either App\Models\Collection or App\Models\Item
+            'commentable_id' => $commentableId, // Either 'collection_id' or 'item_id'
         ];
     }
 }

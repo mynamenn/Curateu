@@ -29,10 +29,6 @@ class CreateCollectionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('collections', function (Blueprint $table) {  
-            $table->dropForeign(['user_id']);
-        });
-
         Schema::dropIfExists('collections');
     }
 }
