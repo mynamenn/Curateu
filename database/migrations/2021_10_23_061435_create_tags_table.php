@@ -17,6 +17,7 @@ class CreateTagsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('description');
+            $table->string('photo'); // URL to photo.
             $table->timestamps();
         });
     }

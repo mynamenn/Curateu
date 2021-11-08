@@ -27,6 +27,7 @@ class CollectionFactory extends Factory
             'name' => $this->faker->name(),
             'description' => $this->faker->sentence($nbWords = 8),
             'user_id' => User::inRandomOrder()->first()->id,
+            'photo' => $this->faker->imageUrl($width = 500, $height = 500),
         ];
     }
 }

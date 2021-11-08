@@ -24,6 +24,7 @@ class TagFactory extends Factory
         return [
             'name' => $this->faker->unique()->word(),
             'description' => $this->faker->sentence($nbWords = 8),
+            'photo' => $this->faker->imageUrl($width = 720, $height = 400),
         ];
     }
 }

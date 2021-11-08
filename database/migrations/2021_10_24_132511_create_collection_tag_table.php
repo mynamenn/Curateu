@@ -14,7 +14,7 @@ class CreateCollectionTagTable extends Migration
     public function up()
     {
         Schema::create('collection_tag', function (Blueprint $table) {
-            $table->id();
+            $table->primary(['collection_id', 'tag_id']);
             $table->foreignId('collection_id')->constrained()->onDelete('cascade');
             $table->foreignId('tag_id')->constrained()->onDelete('cascade');
             $table->timestamps();
