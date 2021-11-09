@@ -15,7 +15,7 @@
     <x-navbar></x-navbar>
     <x-introduction></x-introduction>
     <x-categories :categories="$categories"></x-categories>
-    <x-curations :curations="$curations"></x-curations>
+    <x-collections :collections="$collections"></x-collections>
 </body>
 
 </html>
