@@ -1,5 +1,15 @@
 @props(['collections' => $collections])
 
+<script>
+    function collectionClick(route) {
+        location.href = route;
+    }
+
+    function upvoteClick(e) {
+        e.stopPropagation();
+    }
+</script>
+
 <section class="text-gray-600 body-font">
     <div class="container px-5 py-7 mx-auto flex flex-wrap">
         <div class="flex flex-wrap w-full mb-6 flex-col items-center text-center">
@@ -13,7 +23,8 @@
         <div class="flex flex-wrap -m-4">
             @foreach ($collections as $collection)
                 <div class="p-2 lg:w-1/2 w-full">
-                    <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-4 sm:flex-row flex-row">
+                    <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-4 sm:flex-row flex-row cursor-pointer"
+                        onclick="collectionClick('{{ route('collections.show', ['collection' => $collection]) }}')">
                         <div
                             class="sm:mb-0 sm:w-20 sm:h-20 w-16 h-16 mr-8 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
                             <img src={{ $collection->photo }} alt="content">
@@ -40,7 +51,8 @@
 
                         </div>
                         <button
-                            class="flex flex-col h-full border-2 border-gray-200 p-3 ml-1 rounded-md text-center items-center">
+                            class="flex flex-col h-full border-2 border-gray-200 p-3 ml-1 rounded-md text-center items-center"
+                            onclick="upvoteClick(event)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"
                                 fill="none" stroke="#4B587C" stroke-width="3" stroke-linecap="round"
                                 stroke-linejoin="round" class="feather feather-chevron-up">
