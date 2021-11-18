@@ -13,7 +13,7 @@
 <section class="text-gray-600 body-font">
     <div class="container px-5 py-7 mx-auto flex flex-wrap">
         <div class="flex flex-wrap w-full mb-6 flex-col items-center text-center">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
+            <h1 class="sm:text-3xl text-2xl font-semibold title-font mb-2 text-gray-900">
                 Featured Collections
             </h1>
             <p class="lg:w-1/2 w-full leading-relaxed text-gray-500">
@@ -25,10 +25,8 @@
                 <div class="p-2 lg:w-1/2 w-full">
                     <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-4 sm:flex-row flex-row cursor-pointer"
                         onclick="collectionClick('{{ route('collections.show', ['collection' => $collection]) }}')">
-                        <div
-                            class="sm:mb-0 sm:w-20 sm:h-20 w-16 h-16 mr-8 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
-                            <img src={{ $collection->photo }} alt="content">
-                        </div>
+                        <img class="sm:mb-0 sm:w-20 sm:h-20 w-16 h-16 mr-8 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0"
+                            src={{ $collection->photo }} alt="content">
                         <div class="flex-grow">
                             <h2 class="text-gray-900 text-lg title-font font-medium">{{ $collection->name }}</h2>
                             <p class="leading-relaxed text-base mb-1">

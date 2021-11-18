@@ -17,7 +17,7 @@ class CollectionController extends Controller
     {
         $items = Item::with(['likes', 'comments'])->where('collection_id', $collection->id)->paginate(2);
 
-        return view('collection', [
+        return view('collection-page', [
             'collection' => $collection,
             'items' => $items,
         ]);

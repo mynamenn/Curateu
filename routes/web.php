@@ -24,4 +24,6 @@ Route::get('/dashboard', function () {
 // Route::get('/collections', [CollectionController::class, 'index'])->name('collections');
 Route::get('/collections/{collection}', [CollectionController::class, 'show'])->name('collections.show');
 
+Route::get('/@{username}', [HomeController::class, 'index'])->name('user');
+
 require __DIR__.'/auth.php';
