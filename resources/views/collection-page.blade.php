@@ -12,7 +12,7 @@
     </script>
 
     <div>
-        <div class="flex-column pt-16 pb-24 px-4 rounded-lg overflow-hidden align items-center justify-center text-center">
+        <div class="flex-column pt-16 pb-4 px-4 rounded-lg overflow-hidden align items-center justify-center text-center">
             <img class="w-24 h-24 mb-4 inline-flex items-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0"
                 src={{ $collection->photo }} alt="content">
 
@@ -22,7 +22,7 @@
             <h2 class="tracking-widest text-base title-font font-medium text-gray-500 mb-1">{{ $collection->description }}
             </h2>
             <h2 onclick="usernameClick('{{ route('user', ['username' => $collection->user->username]) }}')"
-                class="block tracking-widest text-base title-font font-medium text-gray-500 mb-4 cursor-pointer transition duration-200 ease-in-out hover:text-indigo-600">
+                class="block tracking-widest text-base title-font font-medium text-gray-500 mb-4 cursor-pointer transition duration-200 ease-in-out hover:text-indigo-600 hover:underline">
                 {{ '@' }}{{ $collection->user->username }}
             </h2>
 
@@ -54,7 +54,7 @@
 
         <a href="{{ url()->previous() }}">Back</a>
 
-        <hr class="border-t-2 border-gray-300 border-opacity-50">
+        <hr class="border-t-1 border-gray-300 border-opacity-50">
         @foreach ($items as $item)
             <div class="transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 flex px-4 my-6 sm:flex-row flex-row cursor-pointer"
                 {{-- onclick="collectionClick('{{ route('collections.show', ['collection' => $collection]) }}')" --}}>
@@ -88,7 +88,13 @@
                 </button>
             </div>
         @endforeach
-        {{ $items->links() }}
-        <hr class="border-t-2 border-gray-300 border-opacity-50 mt-2">
+        <div class="m-4">
+            {{ $items->links() }}
+        </div>
+        <hr class="border-t-1 border-gray-300 border-opacity-50 my-2">
+
+        <p class="text-lg text-gray-600 font-semibold ml-4">Comments</p>
+
+        <x-comments :user="$collection->user" :comments="$comments"></x-comments>
     </div>
 @endsection

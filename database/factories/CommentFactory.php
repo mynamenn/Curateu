@@ -40,7 +40,7 @@ class CommentFactory extends Factory
         
 
         return [
-            'comment' => $this->faker->sentence($nbWords = 8),
+            'body' => $this->faker->sentence($nbWords = 8),
             'user_id' => User::inRandomOrder()->first()->id,
             'commentable_type' => $commentableType, // Either App\Models\Collection or App\Models\Item
             'commentable_id' => $commentableId, // Either 'collection_id' or 'item_id'
