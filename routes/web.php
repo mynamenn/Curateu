@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ Route::get('/dashboard', function () {
 
 // Route::get('/collections', [CollectionController::class, 'index'])->name('collections');
 Route::get('/collections/{collection}', [CollectionController::class, 'show'])->name('collections.show');
+
+Route::get('/categories/{categoryName}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::get('/@{username}', [HomeController::class, 'index'])->name('user');
 

@@ -24,4 +24,5 @@
             </svg>
         </button> --}}
     </div>
+    <hr class="border-t-2 border-gray-300 border-opacity-50" />
 </header>
