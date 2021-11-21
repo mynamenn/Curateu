@@ -20,7 +20,7 @@
             <img class="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full" src={{ $comment->user->profile_picture }} />
             <div class="flex flex-col flex-grow ml-4">
                 <div class="flex cursor-pointer items-center"
-                    onclick="usernameClick('{{ route('user', ['username' => $comment->user->username]) }}')">
+                    onclick="usernameClick('{{ route('user.show', ['username' => $comment->user->username]) }}')">
                     <span class="font-semibold">{{ $comment->user->name }}</span>
                     <span
                         class="ml-1 text-xs text-gray-600 cursor-pointer transition duration-200 ease-in-out hover:text-indigo-600 hover:underline">

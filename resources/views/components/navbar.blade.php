@@ -1,6 +1,6 @@
 <header class="text-gray-600 body-font">
     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+        <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
                 stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
                 viewBox="0 0 24 24">
@@ -12,9 +12,9 @@
             class="md:ml-4 md:py-1 md:pl-4 md:mb-0 mb-4 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-0 pl-3 p-2"
             placeholder="Search...">
         <nav class="md:ml-auto ml-0 flex flex-wrap items-center text-base justify-center">
-            <a class="mr-5 hover:text-gray-900">Home</a>
-            <a class="mr-5 hover:text-gray-900">Collections</a>
-            <a class="md:mr-5 mr-0 hover:text-gray-900">Login</a>
+            <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/">Home</a>
+            <a class="mr-5 hover:text-gray-900 hover:font-bold">Collections</a>
+            <a class="md:mr-5 mr-0 hover:text-gray-900 hover:font-bold">Login</a>
         </nav>
         {{-- <button
             class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Button

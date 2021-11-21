@@ -25,7 +25,7 @@
             </h1>
             <h2 class="tracking-widest text-base title-font font-medium text-gray-500 mb-1">{{ $collection->description }}
             </h2>
-            <h2 onclick="usernameClick('{{ route('user', ['username' => $collection->user->username]) }}')"
+            <h2 onclick="usernameClick('{{ route('user.show', ['username' => $collection->user->username]) }}')"
                 class="block tracking-widest text-base title-font font-medium text-gray-500 mb-4 cursor-pointer transition duration-200 ease-in-out hover:text-indigo-600 hover:underline">
                 {{ '@' }}{{ $collection->user->username }}
             </h2>

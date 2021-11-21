@@ -45,7 +45,7 @@
                         </svg>
                         <p class="mr-3 font-semibold text-sm">{{ $collection->comments->count() }}</p>
                         @foreach ($collection->tags->take(2) as $index => $tag)
-                            <p class="leading-relaxed text-sm mr-1">{{ $tag->name }}
+                            <p class="leading-relaxed text-sm mr-1 hidden sm:inline">{{ $tag->name }}
                                 {{ ($collection->tags->count() > 1 and $index === 0) ? ' · ' : '' }}</p>
                         @endforeach
                     </div>

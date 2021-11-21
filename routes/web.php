@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,6 @@ Route::get('/collections/{collection}', [CollectionController::class, 'show'])->
 
 Route::get('/categories/{categoryName}', [CategoryController::class, 'show'])->name('categories.show');
 
-Route::get('/@{username}', [HomeController::class, 'index'])->name('user');
+Route::get('/@{username}', [UserController::class, 'show'])->name('user.show');
 
 require __DIR__.'/auth.php';
