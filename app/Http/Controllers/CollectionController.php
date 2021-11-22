@@ -11,7 +11,11 @@ class CollectionController extends Controller
 {
     public function index()
     {
+        $collections = Collection::with(['likes', 'comments'])->orderBy('created_at', 'desc')->paginate(5);
 
+        return view('results/collection-results', [
+            'collections' => $collections,
+        ]);
     }
 
     public function show(Collection $collection)

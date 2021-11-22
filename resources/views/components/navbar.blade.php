@@ -13,7 +13,9 @@
             placeholder="Search...">
         <nav class="md:ml-auto ml-0 flex flex-wrap items-center text-base justify-center">
             <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/">Home</a>
-            <a class="mr-5 hover:text-gray-900 hover:font-bold">Collections</a>
+            <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/categories">Categories</a>
+            <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/collections">Collections</a>
+            <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/curators">Curators</a>
             <a class="md:mr-5 mr-0 hover:text-gray-900 hover:font-bold">Login</a>
         </nav>
         {{-- <button

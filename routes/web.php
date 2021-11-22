@@ -23,11 +23,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-// Route::get('/collections', [CollectionController::class, 'index'])->name('collections');
 Route::get('/collections/{collection}', [CollectionController::class, 'show'])->name('collections.show');
+Route::get('/collections', [CollectionController::class, 'index'])->name('collections');
 
 Route::get('/categories/{categoryName}', [CategoryController::class, 'show'])->name('categories.show');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
 
 Route::get('/@{username}', [UserController::class, 'show'])->name('user.show');
+Route::get('/curators', [UserController::class, 'index'])->name('user');
 
 require __DIR__.'/auth.php';

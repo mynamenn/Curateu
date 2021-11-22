@@ -9,7 +9,11 @@ class CategoryController extends Controller
 {
     public function index()
     {
+        $categories = Tag::orderBy('created_at', 'desc')->paginate(5);
 
+        return view('results/category-results', [
+            'categories' => $categories,
+        ]);
     }
 
     public function show($categoryName)
@@ -18,7 +22,7 @@ class CategoryController extends Controller
 
         $category = Tag::where('name', $categoryName)->first();
 
-        $collections = $category->collections()->orderBy('created_at', 'desc')->paginate(2);
+        $collections = $category->collections()->orderBy('created_at', 'desc')->paginate(5);
 
         return view('category', [
             'category' => $category,
