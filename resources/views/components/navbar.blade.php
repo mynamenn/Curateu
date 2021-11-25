@@ -16,15 +16,17 @@
             <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/categories">Categories</a>
             <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/collections">Collections</a>
             <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/curators">Curators</a>
-            <a class="md:mr-5 mr-0 hover:text-gray-900 hover:font-bold">Login</a>
+            @if (Auth::user())
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" class="md:mr-5 mr-0 hover:text-gray-900 hover:font-bold">
+                        Logout
+                    </button>
+                </form>
+            @else
+                <a class="md:mr-5 mr-0 hover:text-gray-900 hover:font-bold" href="/login">Login</a>
+            @endif
         </nav>
-        {{-- <button
-            class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Button
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-        </button> --}}
     </div>
     <hr class="border-t-2 border-gray-300 border-opacity-50" />
 </header>

@@ -28,4 +28,8 @@ class Collection extends Model
     public function tags() {
           return $this->belongsToMany(Tag::class)->withTimestamps();
     }
+
+    public function likedBy() {
+        return $this->likes->contains('user_id', auth()->user()->id);
+    }
 }

@@ -2,10 +2,6 @@
 
 @section('content')
     <script>
-        function upvoteClick(e) {
-            e.stopPropagation();
-        }
-
         function collectionClick(route) {
             location.href = route;
         }
@@ -77,16 +73,8 @@
                         </div>
 
                     </div>
-                    <button
-                        class="flex flex-col h-full border-2 border-gray-200 p-3 ml-1 rounded-md text-center items-center transition duration-500 ease-in-out hover:border-indigo-200"
-                        onclick="upvoteClick(event)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none"
-                            stroke="#4B587C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-chevron-up">
-                            <polyline points="18 15 12 9 6 15"></polyline>
-                        </svg>
-                        <p class="leading-relaxed">{{ $collection->likes->count() }}</p>
-                    </button>
+                    
+                    <x-upvote-button :object="$collection" :actionPath="route('collections.likes', $collection->id)"></x-upvote-button>
                 </div>
                 <hr class="border-t-2 border-gray-300 border-opacity-50" />
             @endforeach

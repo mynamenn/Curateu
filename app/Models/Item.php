@@ -24,4 +24,8 @@ class Item extends Model
     public function comments() {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    public function likedBy() {
+        return $this->likes->contains('user_id', auth()->user()->id);
+    }
 }

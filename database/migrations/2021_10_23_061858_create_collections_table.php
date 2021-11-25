@@ -18,7 +18,7 @@ class CreateCollectionsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('photo'); // URL to photo.
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ class UserController extends Controller
     {
         $curators = User::with(['role'])->paginate(5);
 
-        return view('results/curator-results', [
+        return view('results.curator-results', [
             'curators' => $curators,
         ]);
     }

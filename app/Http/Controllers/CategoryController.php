@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['auth'])->except('index', 'show');
+    }
+
     public function index()
     {
         $categories = Tag::orderBy('created_at', 'desc')->paginate(5);
 
-        return view('results/category-results', [
+        return view('results.category-results', [
             'categories' => $categories,
         ]);
     }

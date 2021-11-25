@@ -6,10 +6,6 @@
             location.href = route;
         }
 
-        function upvoteClick(e) {
-            e.stopPropagation();
-        }
-
         function redirectToLink(link) {
             window.open(link);
         }
@@ -43,17 +39,36 @@
             </div>
 
             {{-- Upvote --}}
-            <button
-                class="flex items-center justify-center bg-indigo-500 px-8 py-3 rounded-md m-auto transition duration-200 ease-in-out hover:bg-indigo-600"
-                onclick="upvoteClick(event)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-chevron-up mr-1">
-                    <polyline points="18 15 12 9 6 15"></polyline>
-                </svg>
-                <p class="text-sm font-semibold text-white mr-2">UPVOTE</p>
-                <p class="text-sm font-extrabold text-white">{{ $collection->likes->count() }}</p>
-            </button>
+            @if (!auth()->user() || !$collection->likedBy(auth()->user()))
+                <form action="{{ route('collections.likes', $collection->id) }}" method="post">
+                    @csrf
+                    <button type="submit"
+                        class="flex items-center justify-center bg-indigo-500 px-8 py-3 rounded-md m-auto transition duration-200 ease-in-out hover:bg-indigo-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-chevron-up mr-1">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                        <p class="text-sm font-semibold text-white mr-2">UPVOTE</p>
+                        <p class="text-sm font-extrabold text-white">{{ $collection->likes->count() }}</p>
+                    </button>
+                </form>
+            @else
+                <form action="{{ route('collections.likes', $collection->id) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                        class="flex items-center justify-center border-2 border-indigo-500 bg-white px-8 py-3 rounded-md m-auto transition duration-200 ease-in-out">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="#3F51B5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-chevron-up mr-1">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                        <p class="text-sm font-semibold text-indigo-500 mr-2">UPVOTED</p>
+                        <p class="text-sm font-extrabold text-indigo-500">{{ $collection->likes->count() }}</p>
+                    </button>
+                </form>
+            @endif
         </div>
 
         <p class="sm:mx-8 mx-2 font-semibold text-2xl">{{ $items->total() }}
@@ -81,16 +96,8 @@
                         </div>
 
                     </div>
-                    <button
-                        class="flex flex-col h-full border-2 border-gray-200 p-3 ml-1 rounded-md text-center items-center transition duration-500 ease-in-out hover:border-indigo-200"
-                        onclick="upvoteClick(event)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none"
-                            stroke="#4B587C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-chevron-up">
-                            <polyline points="18 15 12 9 6 15"></polyline>
-                        </svg>
-                        <p class="leading-relaxed">{{ $item->likes->count() }}</p>
-                    </button>
+
+                    <x-upvote-button :object="$item" :actionPath="route('items.likes', $item->id)"></x-upvote-button>
                 </div>
                 {{-- If no pages and is at last element, don't show hr --}}
                 @if ($items->hasPages() == false && $index == $items->count() - 1)
@@ -107,6 +114,6 @@
             @endif
         </div>
 
-        <x-comments :user="$collection->user" :comments="$comments"></x-comments>
+        <x-comments :user="$collection->user" :comments="$comments" :collection="$collection"></x-comments>
     </div>
 @endsection

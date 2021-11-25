@@ -1,4 +1,4 @@
-@props(['collections' => $collections])
+@props(['collections'])
 
 <script>
     function collectionClick(route) {
@@ -41,23 +41,15 @@
                                 </svg>
                                 <p class="mr-3 font-semibold text-sm">{{ $collection->comments->count() }}</p>
                                 {{-- Tags --}}
-                                @foreach ($collection->tags->take(2) as $index=>$tag)
+                                @foreach ($collection->tags->take(2) as $index => $tag)
                                     <p class="leading-relaxed text-sm mr-1">{{ $tag->name }}
                                         {{ ($collection->tags->count() > 1 and $index === 0) ? ' · ' : '' }}</p>
                                 @endforeach
                             </div>
 
                         </div>
-                        <button
-                            class="flex flex-col h-full border-2 border-gray-200 p-3 ml-1 rounded-md text-center items-center"
-                            onclick="upvoteClick(event)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"
-                                fill="none" stroke="#4B587C" stroke-width="3" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-chevron-up">
-                                <polyline points="18 15 12 9 6 15"></polyline>
-                            </svg>
-                            <p class="leading-relaxed">{{ $collection->likes->count() }}</p>
-                        </button>
+
+                        <x-upvote-button :object="$collection" :actionPath="route('collections.likes', $collection->id)"></x-upvote-button>
                     </div>
                 </div>
             @endforeach
