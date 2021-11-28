@@ -74,45 +74,49 @@
         <p class="sm:mx-8 mx-2 font-semibold text-2xl">{{ $items->total() }}
             {{ Str::plural('Item', $items->total()) }}</p>
 
-        <div class="sm:mx-8 mt-4 mb-6 mx-2 border-2 border-gray-300 border-opacity-50 rounded-md">
-            @foreach ($items as $index => $item)
-                <div class="transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 flex px-4 py-5 sm:flex-row flex-row cursor-pointer"
-                    onclick="redirectToLink('{{ $item->link }}')">
-                    <img class="sm:mb-0 sm:w-20 sm:h-20 w-16 h-16 mr-8 mb-4 inline-flex items-center justify-center bg-indigo-100 text-indigo-500 flex-shrink-0"
-                        src={{ $item->photo }} alt="content">
-                    <div class="flex-grow">
-                        <h2 class="text-gray-900 text-lg title-font font-medium">{{ $item->name }}</h2>
-                        <p class="leading-relaxed text-base mb-1">
-                            {{ $item->description }}
-                        </p>
-                        <div class="flex flex-row items-center">
-                            {{-- <svg viewBox="0 0 13 13" xmlns="http://www.w3.org/2000/svg" color="light-gray" width="12"
+        @if ($items->total() > 0)
+            <div class="sm:mx-8 mt-4 mb-6 mx-2 border-2 border-gray-300 border-opacity-50 rounded-md">
+                @foreach ($items as $index => $item)
+                    <div class="transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 flex px-4 py-5 sm:flex-row flex-row cursor-pointer"
+                        onclick="redirectToLink('{{ $item->link }}')">
+                        <img class="sm:mb-0 sm:w-20 sm:h-20 w-16 h-16 mr-8 mb-4 inline-flex items-center justify-center bg-indigo-100 text-indigo-500 flex-shrink-0"
+                            src={{ $item->photo }} alt="content">
+                        <div class="flex-grow">
+                            <h2 class="text-gray-900 text-lg title-font font-medium">{{ $item->name }}</h2>
+                            <p class="leading-relaxed text-base mb-1">
+                                {{ $item->description }}
+                            </p>
+                            <div class="flex flex-row items-center">
+                                {{-- <svg viewBox="0 0 13 13" xmlns="http://www.w3.org/2000/svg" color="light-gray" width="12"
                                 height="18" class="mr-2">
                                 <path
                                     d="M6.5.75c-3.31 0-6 2.362-6 5.267 0 2.905 2.69 5.266 6 5.266a6.8 6.8 0 001.036-.08l2.725 1.486a.5.5 0 00.74-.44V9.46a4.893 4.893 0 001.5-3.443C12.5 3.112 9.81.75 6.5.75z"
                                     fill="currentColor"></path>
                             </svg> --}}
-                            <p class="mr-3 text-gray-500">{{ $item->created_at->diffForHumans() }}</p>
+                                <p class="mr-3 text-gray-500">{{ $item->created_at->diffForHumans() }}</p>
+                            </div>
+
                         </div>
 
+                        <x-upvote-button :object="$item" :actionPath="route('items.likes', $item->id)"></x-upvote-button>
                     </div>
+                    {{-- If no pages and is at last element, don't show hr --}}
+                    @if ($items->hasPages() == false && $index == $items->count() - 1)
+                        {{-- Do nothing --}}
+                    @else
+                        <hr class="border-t-2 border-gray-300 border-opacity-50" />
+                    @endif
+                @endforeach
 
-                    <x-upvote-button :object="$item" :actionPath="route('items.likes', $item->id)"></x-upvote-button>
-                </div>
-                {{-- If no pages and is at last element, don't show hr --}}
-                @if ($items->hasPages() == false && $index == $items->count() - 1)
-                    {{-- Do nothing --}}
-                @else
-                    <hr class="border-t-2 border-gray-300 border-opacity-50" />
+                @if ($items->hasPages())
+                    <div class="py-3 px-4">
+                        {{ $items->links() }}
+                    </div>
                 @endif
-            @endforeach
-
-            @if ($items->hasPages())
-                <div class="py-3 px-4">
-                    {{ $items->links() }}
-                </div>
-            @endif
-        </div>
+            </div>
+        @else
+            <p class="sm:mx-8 mx-2 mt-5 mb-6 font-medium text-lg">No items found.</p>
+        @endif
 
         <x-comments :user="$collection->user" :comments="$comments" :collection="$collection"></x-comments>
     </div>

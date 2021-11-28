@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $curators = User::with(['role'])->paginate(5);
+        $curators = User::with(['role'])->paginate(6);
 
         return view('results.curator-results', [
             'curators' => $curators,

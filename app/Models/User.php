@@ -58,4 +58,16 @@ class User extends Authenticatable
     public function followers() {
         return $this->hasMany(Follower::class);
     }
+
+    public function isCurator() {
+        return $this->role->name == "curator";
+    }
+
+    public function isModerator() {
+        return $this->role->name == "moderator";
+    }
+
+    public function isAdmin() {
+        return $this->role->name == "admin";
+    }
 }

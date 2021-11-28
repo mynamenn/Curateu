@@ -9,6 +9,18 @@ class Collection extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'user_id',
+        'name',
+        'description',
+        'photo',
+    ];
+
     public function user() {
         return $this->belongsTo(User::class);
     }

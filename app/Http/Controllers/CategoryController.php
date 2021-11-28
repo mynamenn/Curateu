@@ -13,7 +13,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Tag::orderBy('created_at', 'desc')->paginate(5);
+        $categories = Tag::orderBy('created_at', 'desc')->paginate(6);
 
         return view('results.category-results', [
             'categories' => $categories,

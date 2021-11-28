@@ -16,7 +16,7 @@ class CollectionController extends Controller
 
     public function index()
     {
-        $collections = Collection::with(['likes', 'comments'])->orderBy('created_at', 'desc')->paginate(5);
+        $collections = Collection::with(['likes', 'comments'])->orderBy('created_at', 'desc')->paginate(6);
 
         return view('results/collection-results', [
             'collections' => $collections,
@@ -53,6 +53,23 @@ class CollectionController extends Controller
         }
 
         return back();
+    }
+
+    public function create(Request $request) {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            // 'photo' => ['required', 'image'],
+        ]);
+
+        Collection::create([
+            'user_id' => $request->user()->id,
+            'name' => $request->name,
+            'description' => $request->description,
+            'photo' => "https://via.placeholder.com/500x500.png/003344?text=ipsum",
+        ]);
+        
+        return back()->withSuccess('Collection created');
     }
 
     public function destroy(Collection $collection, Request $request) {

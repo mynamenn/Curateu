@@ -12,11 +12,15 @@
             class="md:ml-4 md:py-1 md:pl-4 md:mb-0 mb-4 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-0 pl-3 p-2"
             placeholder="Search...">
         <nav class="md:ml-auto ml-0 flex flex-wrap items-center text-base justify-center">
-            <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/">Home</a>
+            @if (Auth::check())
+                <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/{{'@'}}{{Auth::user()->username}}">Profile</a>
+            @endif
+            
             <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/categories">Categories</a>
             <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/collections">Collections</a>
             <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/curators">Curators</a>
-            @if (Auth::user())
+
+            @if (Auth::check())
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
                     <button type="submit" class="md:mr-5 mr-0 hover:text-gray-900 hover:font-bold">

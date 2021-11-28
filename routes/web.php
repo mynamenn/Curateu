@@ -15,6 +15,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::post('/collections', [CollectionController::class, 'create'])->name('collections.create');
 Route::get('/collections/{collection}', [CollectionController::class, 'show'])->name('collections.show');
 Route::get('/collections', [CollectionController::class, 'index'])->name('collections');
 
