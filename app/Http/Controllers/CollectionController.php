@@ -36,31 +36,8 @@ class CollectionController extends Controller
         ]);
     }
 
-    public function store(Collection $collection, Request $request) {
-        if ($collection->likedBy()) {
-            return response(null, 409);
-        }
-
-        $collection->likes()->create([
-            'user_id' => $request->user()->id,
-            'likeable_type' => Collection::class,
-            'likeable_id' => $collection->id,
-        ]);
-
-        // Only send notification if user liked collection for the first time
-        if (!$collection->likes()->onlyTrashed()->where('user_id', $request->user()->id)->count()) {
-            Mail::to($collection->user)->send(new CollectionLiked(auth()->user(), $collection));
-        }
-
-        return back();
-    }
-
-    public function create(Request $request) {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:255'],
-            // 'photo' => ['required', 'image'],
-        ]);
+    public function store(Request $request) {
+        $this->validateRequest($request);
 
         Collection::create([
             'user_id' => $request->user()->id,
@@ -72,9 +49,25 @@ class CollectionController extends Controller
         return back()->withSuccess('Collection created');
     }
 
-    public function destroy(Collection $collection, Request $request) {
-        $collection->likes()->where('user_id', $request->user()->id)->delete();
+    private function validateRequest(Request $request) {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            // 'photo' => ['required', 'image'],
+        ]);
+    }
 
-        return back();
+    public function update(Collection $collection, Request $request) {
+        $this->validateRequest($request);
+
+        $collection->update(['name' => $request->name, 'description' => $request->description]);
+        
+        return back()->withSuccess('Collection edited');
+    }
+
+    public function destroy(Collection $collection, Request $request) {
+        $collection->delete();
+
+        return back()->withSuccess('Collection deleted');
     }
 }

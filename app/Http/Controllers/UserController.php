@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Services\ImageService;
 
 class UserController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['auth'])->except('index', 'show');
+    }
+
     public function index()
     {
         $curators = User::with(['role'])->paginate(6);
@@ -26,5 +32,34 @@ class UserController extends Controller
             'user' => $user,
             'collections' => $collections,
         ]);
+    }
+
+    private function validateRequest(Request $request, User $user) {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'headline' => ['string', 'max:255', 'nullable'],
+            'website' => ['string', 'max:255', 'nullable'],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user)],
+            'profile_picture' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            // 'cover_picture' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+        ]);
+    }
+
+    public function update($username, Request $request, ImageService $imageService) {
+        $user = User::with(['collections', 'role'])->where('username', $username)->firstOrFail();
+
+        $this->validateRequest($request, $user);
+
+        $imageLink = $imageService->edit(Null, $request->profile_picture);
+
+        $user->update([
+            'name' => $request->name, 
+            'username' => $request->username, 
+            'headline' => $request->headline, 
+            'website' => $request->website,
+            'profile_picture' => $imageLink,
+        ]);
+        
+        return redirect('/@'.$request->username)->withSuccess('Profile edited');
     }
 }

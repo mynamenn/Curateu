@@ -8,12 +8,18 @@
 
         function closeModal() {
             document.getElementById("collectionForm").style.display = "none";
-            document.getElementById("collectionForm").style.opacity = 0;
+        }
+
+        function closeCollection(formId) {
+            document.getElementById(formId).style.display = "none";
         }
 
         function showModal() {
             document.getElementById("collectionForm").style.display = "block";
-            document.getElementById("collectionForm").style.opacity = 100;
+        }
+
+        function showProfileForm() {
+            document.getElementById("profileForm").style.display = "block";
         }
     </script>
 
@@ -23,7 +29,7 @@
             <div class="flex items-center justify-center h-full w-full bg-gray-900 bg-opacity-50">
                 <div class="flex-column px-4 rounded-lg overflow-hidden align items-center justify-center text-center">
                     <img class="w-24 h-24 mb-4 inline-flex items-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0"
-                        src={{ $user->profile_picture != '' ? $user->profile_picture : url('/defaultUser.png') }}
+                        src={{ $user->profile_picture ? $user->profile_picture : url('/defaultUser.png') }}
                         alt="user profile">
 
                     <h1 class="title-font text-3xl font-bold text-white md:text-4xl">
@@ -34,8 +40,8 @@
                         {{ $user->headline }}
                     </h2>
 
-                    <a class="block tracking-widest text-sm title-font font-bold text-white hover:text-blue-400 visited:text-purple-600 hover:underline mb-1 md:text-base"
-                        href="{{ $user->website }}" target="_blank">
+                    <a class="block tracking-widest text-sm title-font font-bold text-white hover:text-blue-500 visited:text-purple-600 hover:underline mb-1 md:text-base"
+                        href="{{ "//".$user->website }}" target="_blank">
                         {{ $user->website }}
                     </a>
 
@@ -52,17 +58,27 @@
                             Joined {{ $user->created_at->format('M Y') }}
                         </p>
                     </div>
+
+                    @if (AuthHelper::canMakeEdits($user->id))
+                        <button onclick="showProfileForm()"
+                            class="text-sm text-white py-2 px-3 border-white border-2 rounded-md mt-2 hover:bg-gray-50 hover:text-blue-700">
+                            EDIT MY PROFILE</button>
+                    @endif
                 </div>
             </div>
         </div>
 
         {{-- Content --}}
         <div class="sm:mx-8 mx-2">
+            <x-banner class="mb-4"></x-banner>
+
+            <x-edit-profile-form :user="$user"></x-edit-profile-form>
+
             <div class="flex flex-row mb-4">
                 <p class="mr-2 font-semibold text-2xl">{{ $collections->total() }}
                     {{ Str::plural('Collection', $collections->total()) }}</p>
 
-                @if (Auth::check() && Auth::user()->isCurator() && Auth::user()->id == $user->id)
+                @if (AuthHelper::canMakeEdits($user->id))
                     <button type="button" onclick="showModal()"
                         class="ml-1 text-indigo-500 font-bold text-base hover:text-white border border-indigo-700 hover:bg-indigo-500 rounded-xl px-4 py-1 text-center">
                         <span class="font-extrabold">+ </span>Add
@@ -70,11 +86,9 @@
                 @endif
             </div>
 
-            <x-banner class="mb-4"></x-banner>
-
-            @if (Auth::check() && Auth::user()->isCurator() && Auth::user()->id == $user->id)
+            @if (AuthHelper::canMakeEdits($user->id))
                 {{-- New collection form --}}
-                <form action="{{ route('collections.create') }}" method="post"
+                <form action="{{ route('collections.store') }}" method="post"
                     class="p-4 border-2 mb-4 hidden border-gray-100" id="collectionForm">
                     @csrf
                     <p class="text-lg font-semibold mb-4">New Collection</p>
@@ -141,10 +155,63 @@
 
                             </div>
 
+                            <x-edit-delete-buttons :user="$user" :deletePath="route('collections.destroy', $collection)"
+                                :formId="'editCollection'.$collection->id">
+                            </x-edit-delete-buttons>
+
                             <x-upvote-button :object="$collection"
                                 :actionPath="route('collections.likes', $collection->id)">
                             </x-upvote-button>
                         </div>
+
+                        @if (AuthHelper::canMakeEdits($user->id))
+                            <div id={{ 'editCollection' . $collection->id }} class="hidden">
+                                <hr class="border-t-2 border-gray-300 border-opacity-50" />
+                                {{-- Edit collection form --}}
+                                <form action="{{ route('collections.update', $collection) }}" method="post"
+                                    class="p-4 border-gray-100">
+                                    @method('PATCH')
+                                    @csrf
+                                    <p class="text-lg font-semibold mb-4">Edit Collection</p>
+                                    <x-auth-validation-errors class="mb-4" :errors="$errors">
+                                    </x-auth-validation-errors>
+                                    <div class="mb-4">
+                                        <label for="name" class="font-medium text-gray-900 block mb-2">Name</label>
+                                        <input type="text" name="name" id="name" value="{{ $collection->name }}"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                            placeholder="Online tools" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="description"
+                                            class="font-medium text-gray-900 block mb-2">Description</label>
+                                        <input type="text" name="description" id="description"
+                                            value="{{ $collection->description }}"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                            placeholder="Best online tools on the market!" required>
+                                    </div>
+
+                                    {{-- <div class="mb-4">
+                                        <label for="photo" class="font-medium text-gray-900 block mb-2">Photo</label>
+                                        <input id="photo" type="file" name="photo" accept="image/*" required>
+                                        <div class="mt-1 text-sm text-gray-500" id="photo_help">Upload an image less than 1MB
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="flex flex-row-reverse">
+                                        <button type="submit"
+                                            class="bg-indigo-500 text-white px-4 py-1 ml-2 rounded-xl text-center items-center transition duration-500 ease-in-out hover:bg-indigo-600">
+                                            Save
+                                        </button>
+                                        <button type="button"
+                                            onclick="closeCollection('{{ 'editCollection' . $collection->id }}')"
+                                            class="text-indigo-500 font-bold text-base  border border-indigo-700 rounded-xl px-4 py-1 text-center">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        @endif
                         <hr class="border-t-2 border-gray-300 border-opacity-50" />
                     @endforeach
 
