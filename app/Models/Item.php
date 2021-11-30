@@ -9,23 +9,41 @@ class Item extends Model
 {
     use HasFactory;
 
-    public function collection() {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'collection_id',
+        'name',
+        'description',
+        'photo',
+        'link'
+    ];
+
+    public function collection()
+    {
         return $this->belongsTo(Collection::class);
     }
 
-    public function itemOwner() {
+    public function itemOwner()
+    {
         return $this->collection->user();
     }
-    
-    public function likes() {
+
+    public function likes()
+    {
         return $this->morphMany(Like::class, 'likeable');
     }
-    
-    public function comments() {
+
+    public function comments()
+    {
         return $this->morphMany(Comment::class, 'commentable');
     }
 
-    public function likedBy() {
+    public function likedBy()
+    {
         return $this->likes->contains('user_id', auth()->user()->id);
     }
 }

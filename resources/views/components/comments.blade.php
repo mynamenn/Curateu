@@ -1,8 +1,8 @@
 @props(['user', 'comments', 'collection'])
 
-<p class="text-lg text-gray-600 font-semibold sm:mx-8 mx-2">Comments</p>
+<p class="text-lg text-gray-600 font-semibold">Comments</p>
 
-<div class="sm:mx-8 my-4 mx-2 border-2 border-gray-300 border-opacity-50 rounded-md">
+<div class="my-4 border-2 border-gray-300 border-opacity-50 rounded-md">
     <div class="flex w-full px-4 py-6 border-b-2 border-gray-300">
         <img class="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full" src={{ $user->profile_picture ? $user->profile_picture : url('/defaultUser.png') }} alt="profile picture"/>
         <form action="{{ route('comments', $collection) }}" method="post" class="flex flex-row flex-grow ml-4">

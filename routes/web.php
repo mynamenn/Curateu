@@ -6,6 +6,7 @@ use App\Http\Controllers\CollectionLikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemLikeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +25,12 @@ Route::get('/collections', [CollectionController::class, 'index'])->name('collec
 Route::post('/collections/{collection}/likes', [CollectionLikeController::class, 'store'])->name('collections.likes');
 Route::delete('/collections/{collection}/likes', [CollectionLikeController::class, 'destroy'])->name('collections.likes');
 
-Route::post('/items/{item}/likes', [ItemController::class, 'store'])->name('items.likes');
-Route::delete('/items/{item}/likes', [ItemController::class, 'destroy'])->name('items.likes');
+Route::post('/items/{collection}', [ItemController::class, 'store'])->name('items.store');
+Route::patch('/items/{item}', [ItemController::class, 'update'])->name('items.update');
+Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
+
+Route::post('/items/{item}/likes', [ItemLikeController::class, 'store'])->name('items.likes');
+Route::delete('/items/{item}/likes', [ItemLikeController::class, 'destroy'])->name('items.likes');
 
 Route::post('/comments/{collection}', [CommentController::class, 'store'])->name('comments');
 

@@ -25,6 +25,7 @@ class ImageService
     public function delete($pictureLink)
     {
         $names = explode('/', $pictureLink);
+        // Get file name from link
         $objectName = end($names);
         $this->bucket->object($objectName)->delete();
     }

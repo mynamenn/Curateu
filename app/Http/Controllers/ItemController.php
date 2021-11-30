@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ItemLiked;
+use App\Models\Collection;
 use App\Models\Item;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class ItemController extends Controller
 {
@@ -13,28 +13,52 @@ class ItemController extends Controller
         $this->middleware(['auth']);
     }
 
-    public function store(Item $item, Request $request) {
-        if ($item->likedBy()) {
-            return response(null, 409);
-        }
-
-        $item->likes()->create([
-            'user_id' => $request->user()->id,
-            'likeable_type' => Item::class,
-            'likeable_id' => $item->id,
+    public function store(Collection $collection,Request $request, ImageService $imageService) {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            'link' => ['string', 'max:255', 'nullable'],
+            'photo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ]);
-        // dd($item->collection->user);
-        // Only send notification if user liked item for the first time
-        if (!$item->likes()->onlyTrashed()->where('user_id', $request->user()->id)->count()) {
-            Mail::to($item->collection->user)->send(new ItemLiked(auth()->user(), $item));
-        }
 
-        return back();
+        $photo = $imageService->edit(Null, $request->photo);
+
+        Item::create([
+            'collection_id' => $collection->id,
+            'name' => $request->name,
+            'description' => $request->description,
+            'link' => $request->link,
+            'photo' => $photo,
+        ]);
+        
+        return back()->withSuccess('Item created');
     }
 
-    public function destroy(Item $item, Request $request) {
-        $item->likes()->where('user_id', $request->user()->id)->delete();
+    public function update(Item $item, Request $request, ImageService $imageService) {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            'link' => ['string', 'max:255', 'nullable'],
+            'photo' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+        ]);
 
-        return back();
+        $photo = $imageService->edit($item->photo, $request->photo);
+
+        $item->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'link' => $request->link,
+            'photo' => $photo,
+        ]);
+        
+        return back()->withSuccess('Item edited');
+    }
+
+    public function destroy(Item $item, ImageService $imageService) {
+        $item->delete();
+
+        $imageService->delete($item->photo);
+
+        return back()->withSuccess('Item deleted');
     }
 }
