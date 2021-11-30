@@ -23,8 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('headline')->nullable();
-            $table->string('profile_picture')->nullable(); // URL to profile picture.
-            $table->string('cover_picture')->nullable(); // URL to cover picture
+            $table->mediumText('profile_picture')->nullable(); // URL to profile picture.
+            $table->mediumText('cover_picture')->nullable(); // URL to cover picture
             $table->string('website')->nullable();
             $table->timestamps();
         });

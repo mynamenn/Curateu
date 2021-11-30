@@ -41,7 +41,7 @@ class UserController extends Controller
             'website' => ['string', 'max:255', 'nullable'],
             'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user)],
             'profile_picture' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            // 'cover_picture' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'cover_picture' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ]);
     }
 
@@ -50,14 +50,16 @@ class UserController extends Controller
 
         $this->validateRequest($request, $user);
 
-        $imageLink = $imageService->edit(Null, $request->profile_picture);
+        $profilePicture = $imageService->edit($user->profile_picture, $request->profile_picture);
+        $coverPicture = $imageService->edit($user->cover_picture, $request->cover_picture);
 
         $user->update([
             'name' => $request->name, 
             'username' => $request->username, 
             'headline' => $request->headline, 
             'website' => $request->website,
-            'profile_picture' => $imageLink,
+            'profile_picture' => $profilePicture,
+            'cover_picture' => $coverPicture,
         ]);
         
         return redirect('/@'.$request->username)->withSuccess('Profile edited');

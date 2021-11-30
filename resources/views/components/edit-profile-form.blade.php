@@ -43,7 +43,21 @@
 
         <div class="mb-4">
             <label for="profile_picture" class="font-medium text-gray-900 block mb-2">Profile Picture</label>
-            <input id="profile_picture" type="file" name="profile_picture" accept="image/*" required>
+            @if ($user->profile_picture)
+                <img class="w-20 h-20 mr-2 inline-flex items-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0"
+                    src={{ $user->profile_picture }} alt="profile preview">
+            @endif
+            <input id="profile_picture" type="file" name="profile_picture" accept="image/*">
+            <div class="mt-1 text-sm text-gray-500" id="photo_help">Upload an image less than 1MB</div>
+        </div>
+
+        <div class="mb-4">
+            <label for="cover_picture" class="font-medium text-gray-900 block mb-2">Cover Picture</label>
+            @if ($user->cover_picture)
+                <img class="w-20 h-20 mr-2 inline-flex items-center bg-indigo-100 text-indigo-500 flex-shrink-0"
+                    src={{ $user->cover_picture }} alt="cover preview">
+            @endif
+            <input id="cover_picture" type="file" name="cover_picture" accept="image/*">
             <div class="mt-1 text-sm text-gray-500" id="photo_help">Upload an image less than 1MB</div>
         </div>
 
