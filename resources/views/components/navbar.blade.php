@@ -16,7 +16,7 @@
                 <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/{{'@'}}{{Auth::user()->username}}">Profile</a>
             @endif
             
-            <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/categories">Categories</a>
+            <a class="mr-5 hover:font-bold hover:text-gray-900" href="/categories">Categories</a>
             <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/collections">Collections</a>
             <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/curators">Curators</a>
 

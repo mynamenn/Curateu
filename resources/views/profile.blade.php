@@ -26,11 +26,22 @@
     <div class="w-full bg-cover bg-center mb-6" style="height:28rem; background-image: url({{ $user->cover_picture }});">
         <div class="flex items-center justify-center h-full w-full bg-gray-900 bg-opacity-50">
             <div class="flex-column px-4 rounded-lg overflow-hidden align items-center justify-center text-center">
-                <img class="w-24 h-24 mb-4 inline-flex items-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0"
-                    src={{ $user->profile_picture ? $user->profile_picture : url('/defaultUser.png') }}
-                    alt="user profile">
 
-                <h1 class="title-font text-3xl font-bold text-white md:text-4xl">
+                <span class="relative inline-block">
+                    <img class="w-24 h-24 mb-4 inline-flex items-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0"
+                        src={{ $user->profile_picture ? $user->profile_picture : url('/defaultUser.png') }}
+                        alt="user profile">
+                    {{-- Role tag --}}
+                    @if (AuthHelper::showRoleTag($user))
+                        <div
+                            class="border-2 border-white px-2 py-1 rounded-full bg-green-500 absolute top-0 right-0 inline-flex items-center justify-center transform translate-x-1/2">
+                            <p class="leading-relaxed text-xs text-white font-bold">{{ ucfirst($user->role->name) }}</p>
+                        </div>
+                    @endif
+
+                </span>
+
+                <h1 class="title-font text-3xl font-bold text-white md:text-4xl mr-2">
                     {{ $user->name }}
                 </h1>
 
@@ -43,9 +54,10 @@
                     {{ $user->website }}
                 </a>
 
-                <h2 class="block tracking-widest text-sm title-font font-medium text-gray-200 mb-1 md:text-base">
+                <h2 class="block tracking-widest text-sm title-font font-medium text-gray-200 md:text-base">
                     {{ '@' }}{{ $user->username }}
                 </h2>
+
                 <div class="flex flex-row items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
                         stroke="white">
@@ -128,7 +140,7 @@
         @if ($collections->total() > 0)
             <div class="mb-6 border-2 border-gray-300 border-opacity-50 rounded-md">
                 @foreach ($collections as $index => $collection)
-                    <div class="transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 flex px-4 py-5 sm:flex-row flex-row cursor-pointer"
+                    <div class="transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 flex px-4 py-5 sm:flex-row flex-row cursor-pointer {{ $collections->hasPages() == False && $index == $collections->total() - 1 ? "" : "border-b border-gray-300" }}"
                         onclick="collectionClick('{{ route('collections.show', ['collection' => $collection]) }}')">
                         <img class="sm:mb-0 sm:w-20 sm:h-20 w-16 h-16 mr-8 mb-4 inline-flex items-center justify-center bg-indigo-100 text-indigo-500 flex-shrink-0"
                             src={{ $collection->photo }} alt="content">
@@ -214,7 +226,6 @@
                             </form>
                         </div>
                     @endif
-                    <hr class="border-t-2 border-gray-300 border-opacity-50" />
                 @endforeach
 
                 @if ($collections->hasPages())

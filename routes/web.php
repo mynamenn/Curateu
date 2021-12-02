@@ -33,6 +33,8 @@ Route::post('/items/{item}/likes', [ItemLikeController::class, 'store'])->name('
 Route::delete('/items/{item}/likes', [ItemLikeController::class, 'destroy'])->name('items.likes');
 
 Route::post('/comments/{collection}', [CommentController::class, 'store'])->name('comments');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 
 Route::get('/categories/{categoryName}', [CategoryController::class, 'show'])->name('categories.show');
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
