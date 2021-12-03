@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -10,7 +11,8 @@ use App\Services\ImageService;
 class UserController extends Controller
 {
     public function __construct() {
-        $this->middleware(['auth'])->except('index', 'show');
+        $this->middleware(['auth', 'editItself'])->except('index', 'show');
+        $this->middleware(['editRole'])->only('updateRole');
     }
 
     public function index()
@@ -28,9 +30,12 @@ class UserController extends Controller
 
         $collections = $user->collections()->orderBy('created_at', 'desc')->paginate(5);
 
+        $roles = Role::get();
+
         return view('profile', [
             'user' => $user,
             'collections' => $collections,
+            'roles' => $roles,
         ]);
     }
 
@@ -45,8 +50,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function update($username, Request $request, ImageService $imageService) {
-        $user = User::with(['collections', 'role'])->where('username', $username)->firstOrFail();
+    public function update(User $user, Request $request, ImageService $imageService) {
+        $user = User::with(['collections', 'role'])->where('username', $user->username)->firstOrFail();
 
         $this->validateRequest($request, $user);
 
@@ -63,5 +68,13 @@ class UserController extends Controller
         ]);
         
         return redirect('/@'.$request->username)->withSuccess('Profile edited');
+    }
+
+    public function updateRole(User $user, Request $request) {
+        $user->update([
+            'role_id' => $request->role,
+        ]);
+        
+        return back()->withSuccess('Role edited');
     }
 }

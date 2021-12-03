@@ -17,6 +17,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::post('/collections', [CollectionController::class, 'store'])->name('collections.store');
+Route::post('/collectionTags/{collection}', [CollectionController::class, 'updateTags'])->name('collections.updateTags');
 Route::get('/collections/{collection}', [CollectionController::class, 'show'])->name('collections.show');
 Route::patch('/collections/{collection}', [CollectionController::class, 'update'])->name('collections.update');
 Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])->name('collections.destroy');
@@ -36,9 +37,13 @@ Route::post('/comments/{collection}', [CommentController::class, 'store'])->name
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 
+Route::patch('/categories/{tag}', [CategoryController::class, 'update'])->name('categories.update');
+Route::delete('/categories/{tag}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 Route::get('/categories/{categoryName}', [CategoryController::class, 'show'])->name('categories.show');
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
 
+Route::patch('/updateRole/{user}', [UserController::class, 'updateRole'])->name('user.updateRole');
 Route::patch('/@{username}', [UserController::class, 'update'])->name('user.update');
 Route::get('/@{username}', [UserController::class, 'show'])->name('user.show');
 Route::get('/curators', [UserController::class, 'index'])->name('user');

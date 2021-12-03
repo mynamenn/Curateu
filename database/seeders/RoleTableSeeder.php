@@ -15,10 +15,9 @@ class RoleTableSeeder extends Seeder
     public function run()
     {
         $roles = [
-            'viewer' => 'Viewer cannot create posts', 
             'curator' => 'Curator can create posts', 
-            'moderator' => 'Moderator can remove posts', 
-            'admin' => 'Admin can do all of the above and add tags'
+            'moderator' => 'Moderator can create new tags', 
+            'admin' => 'Admin can do all of the above and change roles of people'
         ];
         // Create Role from the roles array.
         foreach($roles as $role=>$description) {

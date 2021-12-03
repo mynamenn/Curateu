@@ -9,7 +9,19 @@ class Tag extends Model
 {
     use HasFactory;
 
-    public function collections() {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'name',
+        'description',
+        'photo',
+    ];
+
+    public function collections()
+    {
         return $this->belongsToMany(Collection::class)->withTimestamps();
     }
 }

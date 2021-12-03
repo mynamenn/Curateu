@@ -11,7 +11,7 @@
     }
 </script>
 
-@if (AuthHelper::canMakeEdits($user->id))
+@if (AuthHelper::canEditItself($user->id))
     <form action="{{ $deletePath }}" method="post">
         @csrf
         @method('DELETE')

@@ -6,9 +6,9 @@
     }
 </script>
 
-@if (AuthHelper::canMakeEdits($user->id))
-    <form action="{{ route('user.update', $user->username) }}" method="post" enctype="multipart/form-data"
-        class="p-4 border-2 mb-4 hidden border-gray-100" id="profileForm">
+@if (AuthHelper::canEditItself($user->id))
+    <form action="{{ route('user.update', $user) }}" method="post" enctype="multipart/form-data"
+        class="p-4 border-2 mb-4 hidden border-gray-200" id="profileForm">
         @method('PATCH')
         @csrf
         <p class="text-lg font-semibold mb-4">Edit Profile</p>
