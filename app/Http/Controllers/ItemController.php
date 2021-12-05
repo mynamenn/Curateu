@@ -10,10 +10,10 @@ use Illuminate\Http\Request;
 class ItemController extends Controller
 {
     public function __construct() {
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'handleItem']);
     }
 
-    public function store(Collection $collection,Request $request, ImageService $imageService) {
+    public function store(Collection $collection, Request $request, ImageService $imageService) {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],

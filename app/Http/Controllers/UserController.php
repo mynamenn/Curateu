@@ -11,7 +11,7 @@ use App\Services\ImageService;
 class UserController extends Controller
 {
     public function __construct() {
-        $this->middleware(['auth', 'editItself'])->except('index', 'show');
+        $this->middleware(['auth', 'editProfile'])->except('index', 'show');
         $this->middleware(['editRole'])->only('updateRole');
     }
 
@@ -50,8 +50,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(User $user, Request $request, ImageService $imageService) {
-        $user = User::with(['collections', 'role'])->where('username', $user->username)->firstOrFail();
+    public function update($username, Request $request, ImageService $imageService) {
+        $user = User::with(['collections', 'role'])->where('username', $username)->firstOrFail();
 
         $this->validateRequest($request, $user);
 
@@ -66,7 +66,7 @@ class UserController extends Controller
             'profile_picture' => $profilePicture,
             'cover_picture' => $coverPicture,
         ]);
-        
+
         return redirect('/@'.$request->username)->withSuccess('Profile edited');
     }
 

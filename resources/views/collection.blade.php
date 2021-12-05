@@ -128,7 +128,7 @@
     @if (AuthHelper::canEditItself($collection->user->id))
     {{-- New item form --}}
     <form action="{{ route('items.store', $collection) }}" method="post" enctype="multipart/form-data"
-        class="p-4 border-2 mb-4 hidden border-gray-100" id="itemForm">
+        class="p-4 border-2 mb-4 hidden border-gray-200" id="itemForm">
         @csrf
         @method('POST')
         <p class="text-lg font-semibold mb-4">New Item</p>

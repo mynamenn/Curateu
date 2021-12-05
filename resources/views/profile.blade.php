@@ -33,7 +33,7 @@
 
             <span class="relative inline-block">
                 <img class="w-24 h-24 mb-4 inline-flex items-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0"
-                    src={{ $user->profile_picture ? $user->profile_picture : url('/defaultUser.png') }}
+                    src={{ $user->profile_picture ? $user->profile_picture : url('/img/defaultUser.png') }}
                 alt="user profile">
                 {{-- Role tag --}}
                 @if (AuthHelper::showRoleTag($user))
@@ -126,7 +126,7 @@
     @if (AuthHelper::canEditItself($user->id))
     {{-- New collection form --}}
     <form action="{{ route('collections.store') }}" method="post" enctype="multipart/form-data"
-        class="p-4 border-2 mb-4 hidden border-gray-100" id="collectionForm">
+        class="p-4 border-2 mb-4 hidden border-gray-200" id="collectionForm">
         @csrf
         @method('POST')
         <p class="text-lg font-semibold mb-4">New Collection</p>

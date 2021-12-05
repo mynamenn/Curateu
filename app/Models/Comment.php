@@ -26,7 +26,7 @@ class Comment extends Model
         return $this->morphTo();
     }
 
-    public function user($userId) {
-        return User::find($userId);
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

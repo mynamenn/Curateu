@@ -16,36 +16,45 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::post('/collections', [CollectionController::class, 'store'])->name('collections.store');
 Route::post('/collectionTags/{collection}', [CollectionController::class, 'updateTags'])->name('collections.updateTags');
-Route::get('/collections/{collection}', [CollectionController::class, 'show'])->name('collections.show');
-Route::patch('/collections/{collection}', [CollectionController::class, 'update'])->name('collections.update');
-Route::delete('/collections/{collection}', [CollectionController::class, 'destroy'])->name('collections.destroy');
-Route::get('/collections', [CollectionController::class, 'index'])->name('collections');
 
-Route::post('/collections/{collection}/likes', [CollectionLikeController::class, 'store'])->name('collections.likes');
-Route::delete('/collections/{collection}/likes', [CollectionLikeController::class, 'destroy'])->name('collections.likes');
+Route::prefix('/collections')->group(function () {
+    Route::post('/', [CollectionController::class, 'store'])->name('collections.store');
+    Route::get('/{collection}', [CollectionController::class, 'show'])->name('collections.show');
+    Route::patch('/{collection}', [CollectionController::class, 'update'])->name('collections.update');
+    Route::delete('/{collection}', [CollectionController::class, 'destroy'])->name('collections.destroy');
+    Route::get('/', [CollectionController::class, 'index'])->name('collections');
+    Route::post('/{collection}/likes', [CollectionLikeController::class, 'store'])->name('collections.likes');
+    Route::delete('/{collection}/likes', [CollectionLikeController::class, 'destroy'])->name('collections.likes');
+});
 
-Route::post('/items/{collection}', [ItemController::class, 'store'])->name('items.store');
-Route::patch('/items/{item}', [ItemController::class, 'update'])->name('items.update');
-Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
+Route::prefix('/items')->group(function () { 
+    Route::post('/{collection}', [ItemController::class, 'store'])->name('items.store');
+    Route::patch('/{item}', [ItemController::class, 'update'])->name('items.update');
+    Route::delete('/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
+    Route::post('/{item}/likes', [ItemLikeController::class, 'store'])->name('items.likes');
+    Route::delete('/{item}/likes', [ItemLikeController::class, 'destroy'])->name('items.likes');
+});
 
-Route::post('/items/{item}/likes', [ItemLikeController::class, 'store'])->name('items.likes');
-Route::delete('/items/{item}/likes', [ItemLikeController::class, 'destroy'])->name('items.likes');
+Route::prefix('/comments')->group(function () {
+    Route::post('/apiStore', [CommentController::class, 'apiStore']);
+    Route::post('/apiIndex', [CommentController::class, 'apiIndex']);
+    Route::post('/{collection}', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::patch('/{comment}', [CommentController::class, 'update'])->name('comments.update');
+});
 
-Route::post('/comments/{collection}', [CommentController::class, 'store'])->name('comments');
-Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
-Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
-
-Route::patch('/categories/{tag}', [CategoryController::class, 'update'])->name('categories.update');
-Route::delete('/categories/{tag}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-Route::get('/categories/{categoryName}', [CategoryController::class, 'show'])->name('categories.show');
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+Route::prefix('/categories')->group(function () { 
+    Route::patch('/{tag}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/{tag}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/{categoryName}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::get('/', [CategoryController::class, 'index'])->name('categories');
+    Route::post('/', [CategoryController::class, 'store'])->name('categories.store');
+});
 
 Route::patch('/updateRole/{user}', [UserController::class, 'updateRole'])->name('user.updateRole');
 Route::patch('/@{username}', [UserController::class, 'update'])->name('user.update');
 Route::get('/@{username}', [UserController::class, 'show'])->name('user.show');
 Route::get('/curators', [UserController::class, 'index'])->name('user');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

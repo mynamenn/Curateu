@@ -12,8 +12,8 @@
             <h1 class="sm:text-3xl text-2xl font-semibold title-font mb-2 text-gray-900">
                 Categories
             </h1>
-            <p class="lg:w-1/2 w-full leading-relaxed text-gray-500">
-                Find the curations you need in these categories.
+            <p class="text-lg lg:w-1/2 w-full leading-relaxed text-gray-500">
+                Find the tools and resources you need in each category
             </p>
         </div>
         <div class="flex flex-wrap -m-4">

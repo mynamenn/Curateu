@@ -7,7 +7,7 @@
 </script>
 
 @if (AuthHelper::canEditItself($user->id))
-    <form action="{{ route('user.update', $user) }}" method="post" enctype="multipart/form-data"
+    <form action="{{ route('user.update', $user->username) }}" method="post" enctype="multipart/form-data"
         class="p-4 border-2 mb-4 hidden border-gray-200" id="profileForm">
         @method('PATCH')
         @csrf
