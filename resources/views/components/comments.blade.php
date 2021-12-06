@@ -131,10 +131,10 @@
     
     @foreach ($comments as $index => $comment)
     <div class="flex w-full py-8 px-4 {{ $comments->hasPages() == False && $index == $comments->total() - 1 ?  : "
-        border-b border-gray-300" }}">
+        border-b border-gray-300" }}" tabindex="0">
         <img class="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full" src={{$comment->user->profile_picture }} />
         <div class="flex flex-col flex-grow ml-4">
-            <div class="flex cursor-pointer items-center"
+            <div class="flex cursor-pointer items-center" tabindex="0"
                 onclick="usernameClick('{{ route('user.show', ['username' => $comment->user->username]) }}')">
                 <span class="font-semibold">{{ $comment->user->name }}</span>
                 <span
@@ -181,9 +181,9 @@
 
     @endforeach
 
-    {{-- @if ($comments->hasPages())
+    @if ($comments->hasPages())
     <div class="py-3 px-4">
         {{ $comments->links() }}
     </div>
-    @endif --}}
+    @endif
 </div>

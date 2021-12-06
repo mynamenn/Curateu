@@ -80,9 +80,10 @@
 
         <div class="flex flex-wrap mb-2">
             @foreach ($categories as $category)
-                <div class="p-4 sm:w-1/2 lg:w-1/3 cursor-pointer transform hover:-translate-y-1 transition duration-500 ease-in-out"
-                    onclick="categoryClick('{{ route('categories.show', ['categoryName' => str_replace(' ', '-', $category->name)]) }}')">
-                    <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                <button class="p-4 text-left sm:w-1/2 lg:w-1/3 transform hover:-translate-y-1 transition duration-500 ease-in-out"
+                    onclick="categoryClick('{{ route('categories.show', ['categoryName' => str_replace(' ', '-', $category->name)]) }}')"
+                    >
+                    <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden focus:border-black">
                         <img class="lg:h-48 md:h-36 w-full object-cover object-center" src={{ $category->photo }}
                             alt="coverPhoto">
                         <div class="p-6">
@@ -90,7 +91,7 @@
                             <p class="leading-relaxed mb-1">{{ $category->description }}</p>
                         </div>
                     </div>
-                </div>
+                </button>
             @endforeach
         </div>
         {{ $categories->links() }}

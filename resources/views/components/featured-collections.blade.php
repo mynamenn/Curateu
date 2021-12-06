@@ -24,7 +24,7 @@
             @foreach ($collections as $collection)
                 <div class="p-2 lg:w-1/2 w-full">
                     <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-4 sm:flex-row flex-row cursor-pointer transform hover:-translate-y-1 transition duration-500 ease-in-out"
-                        onclick="collectionClick('{{ route('collections.show', ['collection' => $collection]) }}')">
+                        onclick="collectionClick('{{ route('collections.show', ['collection' => $collection]) }}')" tabindex="0">
                         <img class="sm:mb-0 sm:w-20 sm:h-20 w-16 h-16 mr-8 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0"
                             src={{ $collection->photo }} alt="content">
                         <div class="flex-grow">

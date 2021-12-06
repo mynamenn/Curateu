@@ -11,19 +11,19 @@
                 <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/{{'@'}}{{Auth::user()->username}}">Profile</a>
             @endif
             
-            <a class="mr-5 hover:font-bold hover:text-gray-900" href="/categories">Categories</a>
-            <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/collections">Collections</a>
-            <a class="mr-5 hover:text-gray-900 hover:font-bold" href="/curators">Curators</a>
+            <a class="mr-5 hover:text-indigo-500 focus:text-indigo-500 focus:font-bold" href="/categories">Categories</a>
+            <a class="mr-5 hover:text-indigo-500 focus:text-indigo-500 focus:font-bold" href="/collections">Collections</a>
+            <a class="mr-5 hover:text-indigo-500 focus:text-indigo-500 focus:font-bold" href="/curators">Curators</a>
 
             @if (Auth::check())
                 <form action="{{ route('logout') }}" method="post" class="mb-0">
                     @csrf
-                    <button type="submit" class="lg:mr-5 mr-0 hover:text-gray-900 hover:font-bold">
+                    <button type="submit" class="lg:mr-5 mr-0 hover:font-bold hover:text-indigo-500 focus:text-indigo-500">
                         Logout
                     </button>
                 </form>
             @else
-                <a class="lg:mr-5 mr-0 hover:text-gray-900 hover:font-bold" href="/login">Login</a>
+                <a class="lg:mr-5 mr-0 hover:text-indigo-500 focus:text-indigo-500" href="/login">Login</a>
             @endif
         </div>
     </div>

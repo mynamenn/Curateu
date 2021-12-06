@@ -18,7 +18,7 @@
         </div>
         <div class="flex flex-wrap -m-4">
             @foreach ($categories as $category)
-                <div class="p-4 sm:w-1/2 lg:w-1/4 cursor-pointer transform hover:-translate-y-1 transition duration-500 ease-in-out" 
+                <div class="p-4 sm:w-1/2 lg:w-1/4 cursor-pointer transform hover:-translate-y-1 transition duration-500 ease-in-out" tabindex="0"
                 onclick="categoryClick('{{ route('categories.show', ['categoryName' => str_replace(' ', '-', $category->name)]) }}')">
                     <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                         <img class="lg:h-48 md:h-36 w-full object-cover object-center" src={{ $category->photo }}
