@@ -15,6 +15,11 @@
             document.getElementById(formId).style.display = "block";
         }
 
+        function showCollectionForm(e, formId) {
+            e.stopPropagation();
+            document.getElementById(formId).style.display = "block";
+        }
+
         function closeCollection(formId) {
             document.getElementById(formId).style.display = "none";
         }
@@ -201,11 +206,13 @@
 
                         @if (AuthHelper::canEditItself($user->id))
                             <div class="inline-flex flex-col" role="group">
-                                <button type="button" onclick="showForm(event, '{{ 'editCollection'.$collection->id }}')"
+                                <button type="button"
+                                    onclick="showCollectionForm(event, '{{ 'editCollection' . $collection->id }}')"
                                     class="rounded-lg border-2 mb-1 border-gray-200 bg-white text-sm font-medium px-4 py-2 text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
                                     Edit
                                 </button>
-                                <button onclick="showDeleteConfirmation(event, '{{ 'deleteCollection'.$collection->id }}')"
+                                <button
+                                    onclick="showDeleteConfirmation(event, '{{ 'deleteCollection' . $collection->id }}')"
                                     class="rounded-lg border-2 border-gray-200 bg-white text-sm font-medium px-4 py-2 text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
                                     Delete
                                 </button>

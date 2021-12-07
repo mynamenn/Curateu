@@ -12,7 +12,8 @@ use Illuminate\Http\Request;
 class CollectionController extends Controller
 {
     public function __construct() {
-        $this->middleware(['auth', 'handleCollection'])->except('index', 'show');
+        $this->middleware(['auth', 'handleCollection'])->except('index', 'show', 'updateTags');
+        $this->middleware(['editCategory'])->only('updateTags');
     }
 
     public function index()

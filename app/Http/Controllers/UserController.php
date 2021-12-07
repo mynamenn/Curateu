@@ -11,7 +11,7 @@ use App\Services\ImageService;
 class UserController extends Controller
 {
     public function __construct() {
-        $this->middleware(['auth', 'editProfile'])->except('index', 'show');
+        $this->middleware(['auth', 'editProfile'])->except('index', 'show', 'updateRole');
         $this->middleware(['editRole'])->only('updateRole');
     }
 
