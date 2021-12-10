@@ -17,7 +17,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $curators = User::with(['role'])->paginate(6);
+        $curators = User::with(['role'])->orderBy('created_at', 'desc')->paginate(6);
 
         return view('results.curator-results', [
             'curators' => $curators,

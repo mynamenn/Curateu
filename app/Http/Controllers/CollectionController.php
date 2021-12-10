@@ -27,7 +27,7 @@ class CollectionController extends Controller
 
     public function show(Collection $collection)
     {
-        $items = Item::with(['likes', 'comments', 'collection'])->where('collection_id', $collection->id)->paginate(5, ['*'], 'items');
+        $items = Item::with(['likes', 'comments', 'collection'])->where('collection_id', $collection->id)->orderBy('created_at', 'desc')->paginate(5, ['*'], 'items');
 
         $comments = $collection->comments()->orderBy('created_at', 'desc')->paginate(5, ['*'], 'comments');
 

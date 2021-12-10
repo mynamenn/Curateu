@@ -121,6 +121,9 @@
 
         <x-forms.edit-role-form :user="$user" :roles="$roles"></x-forms.edit-role-form>
 
+        <x-auth-validation-errors class="mb-4" :errors="$errors">
+        </x-auth-validation-errors>
+
         <div class="flex flex-row mb-4">
             <p class="mr-3 font-semibold text-2xl">{{ $collections->total() }}
                 {{ Str::plural('Collection', $collections->total()) }}</p>
@@ -140,7 +143,6 @@
                 @csrf
                 @method('POST')
                 <p class="text-lg font-semibold mb-4">New Collection</p>
-                <x-auth-validation-errors class="mb-4" :errors="$errors"></x-auth-validation-errors>
                 <div class="mb-4">
                     <label for="name" class="font-medium text-gray-900 block mb-2">Name</label>
                     <input type="text" name="name" id="name"

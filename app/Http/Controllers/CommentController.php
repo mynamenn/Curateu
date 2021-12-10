@@ -41,6 +41,10 @@ class CommentController extends Controller
 
     public function update(Comment $comment, Request $request)
     {
+        if ($comment->user->id != auth()->user()->id) {
+            return back()->withError('Please edit your own comment');
+        }
+
         $this->validateRequest($request);
 
         $comment->update([

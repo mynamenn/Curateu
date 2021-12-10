@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Metadata;
 use App\Models\Role;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -39,6 +40,8 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'country' => ['required', 'string'],
+            'referral_source' => ['required', 'string'],
         ]);
 
         $user = User::create([
@@ -47,6 +50,12 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role_id' => Role::where('name', 'curator')->first()->id,
+        ]);
+
+        Metadata::create([
+            'user_id' => $user->id,
+            'country'=> $request->country,
+            'referral_source'=> $request->referral_source,
         ]);
 
         event(new Registered($user));
