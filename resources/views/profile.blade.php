@@ -176,12 +176,12 @@
             </form>
         @endif
 
+        {{-- Collections --}}
         @if ($collections->total() > 0)
             <div class="mb-6 border-2 border-gray-300 border-opacity-50 rounded-md">
                 @foreach ($collections as $index => $collection)
                     <div class="transition duration-500 ease-in-out hover:bg-gray-100 transform hover:-translate-y-1 flex px-4 py-5 sm:flex-row flex-row cursor-pointer"
-                        onclick="collectionClick('{{ route('collections.show', ['collection' => $collection]) }}')"
-                        tabindex="0">
+                        onclick="collectionClick('{{ route('collections.show', ['collection' => $collection]) }}')" tabindex="0">
                         <img class="sm:mb-0 sm:w-20 sm:h-20 w-16 h-16 mr-8 mb-4 inline-flex items-center justify-center bg-indigo-100 text-indigo-500 flex-shrink-0"
                             src={{ $collection->photo }} alt="content">
                         <div class="flex-grow">
@@ -198,14 +198,14 @@
                                         fill="currentColor"></path>
                                 </svg>
                                 <p class="mr-3 font-semibold text-sm">{{ $collection->comments->count() }}</p>
-                                @foreach ($collection->tags->take(2) as $index => $tag)
+                                @foreach ($collection->tags->take(2) as $tagIndex => $tag)
                                     <p class="leading-relaxed text-sm mr-1 hidden sm:inline">{{ $tag->name }}
-                                        {{ ($collection->tags->count() > 1 and $index === 0) ? ' · ' : '' }}</p>
+                                        {{ ($collection->tags->count() > 1 and $tagIndex === 0) ? ' · ' : '' }}</p>
                                 @endforeach
                             </div>
-
                         </div>
 
+                        {{-- Edit buttons --}}
                         @if (AuthHelper::canEditItself($user->id))
                             <div class="inline-flex flex-col" role="group">
                                 <button type="button"
@@ -225,10 +225,11 @@
                         </x-upvote-button>
                     </div>
 
+                    {{-- Delete collection confirmation --}}
                     @if (AuthHelper::canEditItself($user->id))
                         <div id={{ 'deleteCollection' . $collection->id }} class="hidden">
                             <hr class="border-t-2 border-gray-300 border-opacity-50" />
-                            {{-- Delete collection confirmation --}}
+                            
                             <form action="{{ route('collections.destroy', $collection) }}" method="post"
                                 class="p-4 border-gray-100">
                                 @method('DELETE')
@@ -259,8 +260,6 @@
                                 @method('PATCH')
                                 @csrf
                                 <p class="text-lg font-semibold mb-4">Edit Collection</p>
-                                <x-auth-validation-errors class="mb-4" :errors="$errors">
-                                </x-auth-validation-errors>
                                 <div class="mb-4">
                                     <label for="name" class="font-medium text-gray-900 block mb-2">Name</label>
                                     <input type="text" name="name" id="name" value="{{ $collection->name }}"

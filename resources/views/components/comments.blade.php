@@ -131,7 +131,7 @@
             "
                 border-b border-gray-300" }}"
             tabindex="0">
-            <img class="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full" src={{ $comment->user->profile_picture }} />
+            <img class="flex-shrink-0 w-12 h-12 bg-gray-400 rounded-full" src={{ $comment->user->profile_picture ? $comment->user->profile_picture : url('/img/defaultUser.png') }} />
             <div class="flex flex-col flex-grow ml-4">
                 <div class="flex cursor-pointer items-center" tabindex="0"
                     onclick="usernameClick('{{ route('user.show', ['username' => $comment->user->username]) }}')">

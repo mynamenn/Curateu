@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemLikeController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,8 +38,8 @@ Route::prefix('/items')->group(function () {
 });
 
 Route::prefix('/comments')->group(function () {
-    Route::post('/apiStore', [CommentController::class, 'apiStore']);
-    Route::post('/apiIndex', [CommentController::class, 'apiIndex']);
+    // Route::post('/apiStore', [CommentController::class, 'apiStore']);
+    // Route::post('/apiIndex', [CommentController::class, 'apiIndex']);
     Route::post('/{collection}', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::patch('/{comment}', [CommentController::class, 'update'])->name('comments.update');
@@ -56,5 +57,7 @@ Route::patch('/updateRole/{user}', [UserController::class, 'updateRole'])->name(
 Route::patch('/@{username}', [UserController::class, 'update'])->name('user.update');
 Route::get('/@{username}', [UserController::class, 'show'])->name('user.show');
 Route::get('/curators', [UserController::class, 'index'])->name('user');
+
+Route::get('/search', [SearchController::class, 'show'])->name('search.show');
 
 require __DIR__ . '/auth.php';

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmailJob;
 use App\Mail\ItemLiked;
 use App\Models\Item;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class ItemLikeController extends Controller
 
         // Only send notification if user liked item for the first time
         if (!$item->likes()->onlyTrashed()->where('user_id', $request->user()->id)->count()) {
-            Mail::to($item->collection->user)->send(new ItemLiked(auth()->user(), $item));
+            // Mail::to($item->collection->user)->send(new ItemLiked(auth()->user(), $item));
+            SendEmailJob::dispatch($item->collection->user, new ItemLiked(auth()->user(), $item));
         }
 
         return back();

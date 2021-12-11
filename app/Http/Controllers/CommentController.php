@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmailJob;
 use App\Mail\CommentAdded;
 use App\Models\Collection;
 use App\Models\Comment;
@@ -34,7 +35,7 @@ class CommentController extends Controller
             'commentable_type' => Collection::class,
         ]);
 
-        Mail::to($collection->user)->send(new CommentAdded(auth()->user(), $collection));
+        SendEmailJob::dispatch($collection->user, new CommentAdded(auth()->user(), $collection));
 
         return back()->withSuccess('Comment added');
     }
@@ -61,30 +62,31 @@ class CommentController extends Controller
         return back()->withSuccess('Comment deleted');
     }
 
-    public function apiIndex(Request $request)
-    {
-        $collectionId = $request->collectionId;
+    // public function apiIndex(Request $request)
+    // {
+    //     $collectionId = $request->collectionId;
 
-        $comments = Comment::with(['user'])->where('commentable_type', Collection::class)->where('commentable_id', $collectionId)->get();
+    //     $comments = Comment::with(['user'])->where('commentable_type', Collection::class)->where('commentable_id', $collectionId)->get();
 
-        return response($comments);
-    }
+    //     return response($comments);
+    // }
 
-    public function apiStore(Request $request)
-    {
-        // $this->validateRequest($request);
-        $collectionId = $request->collectionId;
-        $collection = Collection::find($collectionId);
+    // public function apiStore(Request $request)
+    // {
+    //     // $this->validateRequest($request);
+    //     $collectionId = $request->collectionId;
+    //     $collection = Collection::find($collectionId);
 
-        $comment = Comment::create([
-            'user_id' => $request->user()->id,
-            'body' => $request->body,
-            'commentable_id' => $collection->id,
-            'commentable_type' => Collection::class,
-        ]);
+    //     $comment = Comment::create([
+    //         'user_id' => $request->user()->id,
+    //         'body' => $request->body,
+    //         'commentable_id' => $collection->id,
+    //         'commentable_type' => Collection::class,
+    //     ]);
 
-        Mail::to($collection->user)->send(new CommentAdded(auth()->user(), $collection));
+    //     // Mail::to($collection->user)->send(new CommentAdded(auth()->user(), $collection));
+    //     SendEmailJob::dispatch($collection->user, new CommentAdded(auth()->user(), $collection));
 
-        return $comment;
-    }
+    //     return $comment;
+    // }
 }

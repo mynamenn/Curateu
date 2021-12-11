@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmailJob;
 use App\Mail\CollectionLiked;
 use App\Models\Collection;
 use Illuminate\Http\Request;
@@ -28,7 +29,8 @@ class CollectionLikeController extends Controller
 
         // Only send notification if user liked collection for the first time
         if (!$collection->likes()->onlyTrashed()->where('user_id', $request->user()->id)->count()) {
-            Mail::to($collection->user)->send(new CollectionLiked(auth()->user(), $collection));
+            // Mail::to($collection->user)->queue(new CollectionLiked(auth()->user(), $collection));
+            SendEmailJob::dispatch($collection->user, new CollectionLiked(auth()->user(), $collection));
         }
 
         return back();

@@ -12,7 +12,7 @@
         @method('PATCH')
         @csrf
         <p class="text-lg font-semibold mb-4">Edit Profile</p>
-        <x-auth-validation-errors class="mb-4" :errors="$errors"></x-auth-validation-errors>
+
         <div class="mb-4">
             <label for="name" class="font-medium text-gray-900 block mb-2">Name</label>
             <input type="text" name="name" id="name" value="{{ $user->name }}"
