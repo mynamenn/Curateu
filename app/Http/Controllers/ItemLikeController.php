@@ -16,6 +16,7 @@ class ItemLikeController extends Controller
     }
 
     public function store(Item $item, Request $request) {
+        // User can't like an item twice
         if ($item->likedBy()) {
             return response(null, 409);
         }
@@ -28,7 +29,6 @@ class ItemLikeController extends Controller
 
         // Only send notification if user liked item for the first time
         if (!$item->likes()->onlyTrashed()->where('user_id', $request->user()->id)->count()) {
-            // Mail::to($item->collection->user)->send(new ItemLiked(auth()->user(), $item));
             SendEmailJob::dispatch($item->collection->user, new ItemLiked(auth()->user(), $item));
         }
 

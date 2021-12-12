@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-<script>
-    function usernameClick(route) {
-        location.href = route;
-    }
-</script>
-
 @section('content')
     <div class="container px-5 pt-10 pb-5 mx-auto">
         <div class="flex flex-wrap w-full mb-4 flex-col items-center text-center">

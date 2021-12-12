@@ -55,6 +55,7 @@ class UserController extends Controller
 
         $this->validateRequest($request, $user);
 
+        // Edit images in Firebase Storage.
         $profilePicture = $imageService->edit($user->profile_picture, $request->profile_picture);
         $coverPicture = $imageService->edit($user->cover_picture, $request->cover_picture);
 

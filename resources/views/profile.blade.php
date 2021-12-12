@@ -115,14 +115,14 @@
 
     {{-- Content --}}
     <div class="sm:mx-8 mx-2">
-        <x-banner class="mb-4"></x-banner>
+        <x-success-banner class="mb-4"></x-success-banner>
 
         <x-forms.edit-profile-form :user="$user"></x-forms.edit-profile-form>
 
         <x-forms.edit-role-form :user="$user" :roles="$roles"></x-forms.edit-role-form>
 
-        <x-auth-validation-errors class="mb-4" :errors="$errors">
-        </x-auth-validation-errors>
+        <x-auths.auth-validation-errors class="mb-4" :errors="$errors">
+        </x-auths.auth-validation-errors>
 
         <div class="flex flex-row mb-4">
             <p class="mr-3 font-semibold text-2xl">{{ $collections->total() }}
@@ -136,8 +136,8 @@
             @endif
         </div>
 
+        {{-- New collection form --}}
         @if (AuthHelper::canEditItself($user->id))
-            {{-- New collection form --}}
             <form action="{{ route('collections.store') }}" method="post" enctype="multipart/form-data"
                 class="p-4 border-2 mb-4 hidden border-gray-200" id="collectionForm">
                 @csrf
@@ -221,8 +221,8 @@
                             </div>
                         @endif
 
-                        <x-upvote-button :object="$collection" :actionPath="route('collections.likes', $collection->id)">
-                        </x-upvote-button>
+                        <x-buttons.upvote-button :object="$collection" :actionPath="route('collections.likes', $collection->id)">
+                        </x-buttons.upvote-button>
                     </div>
 
                     {{-- Delete collection confirmation --}}
@@ -251,10 +251,10 @@
                         </div>
                     @endif
 
+                    {{-- Edit collection form --}}
                     @if (AuthHelper::canEditItself($user->id))
                         <div id={{ 'editCollection' . $collection->id }} class="hidden">
                             <hr class="border-t-2 border-gray-300 border-opacity-50" />
-                            {{-- Edit collection form --}}
                             <form action="{{ route('collections.update', $collection) }}" method="post"
                                 enctype="multipart/form-data" class="p-4 border-gray-100">
                                 @method('PATCH')

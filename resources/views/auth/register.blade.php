@@ -3,7 +3,7 @@
 @section('content')
 
     <x-guest-layout>
-        <x-auth-card>
+        <x-auths.auth-card>
             <x-slot name="logo">
                 <a href="/">
                     <x-application-logo class="w-68 h-14 fill-current text-gray-500" />
@@ -11,7 +11,7 @@
             </x-slot>
 
             <!-- Validation Errors -->
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+            <x-auths.auth-validation-errors class="mb-4" :errors="$errors" />
 
             <form method="POST" action="{{ route('register') }}">
                 @csrf
@@ -20,7 +20,7 @@
                 <div>
                     <x-label for="name" :value="__('Name')" />
 
-                    <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
+                    <x-forms.input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
                         autofocus />
                 </div>
 
@@ -28,7 +28,7 @@
                 <div class="mt-4">
                     <x-label for="username" :value="__('Username')" />
 
-                    <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required
+                    <x-forms.input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required
                         autofocus />
                 </div>
 
@@ -36,14 +36,14 @@
                 <div class="mt-4">
                     <x-label for="email" :value="__('Email')" />
 
-                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                    <x-forms.input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
                 </div>
 
                 <!-- Password -->
                 <div class="mt-4">
                     <x-label for="password" :value="__('Password')" />
 
-                    <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
+                    <x-forms.input id="password" class="block mt-1 w-full" type="password" name="password" required
                         autocomplete="new-password" />
                 </div>
 
@@ -51,7 +51,7 @@
                 <div class="mt-4">
                     <x-label for="password_confirmation" :value="__('Confirm Password')" />
 
-                    <x-input id="password_confirmation" class="block mt-1 w-full" type="password"
+                    <x-forms.input id="password_confirmation" class="block mt-1 w-full" type="password"
                         name="password_confirmation" required />
                 </div>
 
@@ -59,7 +59,7 @@
                 <div class="mt-4">
                     <x-label for="country" :value="__('Country')" />
 
-                    <x-input id="country" class="block mt-1 w-full" type="text" name="country" :value="old('country')" required
+                    <x-forms.input id="country" class="block mt-1 w-full" type="text" name="country" :value="old('country')" required
                         autofocus />
                 </div>
 
@@ -67,7 +67,7 @@
                 <div class="mt-4">
                     <x-label for="referral_source" :value="__('Where did you hear about us?')" />
 
-                    <x-input id="referral_source" class="block mt-1 w-full" type="text" name="referral_source" :value="old('referral_source')" required
+                    <x-forms.input id="referral_source" class="block mt-1 w-full" type="text" name="referral_source" :value="old('referral_source')" required
                         autofocus />
                 </div>
 
@@ -76,11 +76,11 @@
                         {{ __('Already registered?') }}
                     </a>
 
-                    <x-button class="ml-4">
+                    <x-buttons.button class="ml-4">
                         {{ __('Register') }}
-                    </x-button>
+                    </x-buttons.button>
                 </div>
             </form>
-        </x-auth-card>
+        </x-auths.auth-card>
     </x-guest-layout>
 @endsection

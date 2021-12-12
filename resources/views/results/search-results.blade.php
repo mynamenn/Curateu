@@ -12,10 +12,14 @@
 
 @section('content')
     <div class="container px-5 pt-10 pb-5 mx-auto">
+        <h1 class="sm:text-4xl text-3xl mx-2 font-bold title-font mb-6">
+            Results with "{{ $query }}"
+        </h1>
+
         {{-- Category results --}}
         <div class="flex flex-wrap w-full mx-2 mb-4 flex-col text-left">
-            <h1 class="sm:text-3xl text-2xl font-bold title-font mb-2 text-gray-900">
-                Categories with "{{ $query }}"
+            <h1 class="sm:text-3xl text-2xl font-semibold title-font mb-2 text-gray-900">
+                Categories
             </h1>
             <p class="w-full leading-relaxed text-gray-500 text-lg">
                 {{ $categories->total() }} Results
@@ -32,8 +36,8 @@
 
         {{-- Collection results --}}
         <div class="flex flex-wrap w-full mx-2 mb-4 flex-col text-left">
-            <h1 class="sm:text-3xl text-2xl font-bold title-font mb-2 text-gray-900">
-                Collections with "{{ $query }}"
+            <h1 class="sm:text-3xl text-2xl font-semibold title-font mb-2 text-gray-900">
+                Collections
             </h1>
             <p class="w-full leading-relaxed text-gray-500 text-lg">
                 {{ $collections->total() }} Results
@@ -50,8 +54,8 @@
 
         {{-- Curator results --}}
         <div class="flex flex-wrap w-full mx-2 mb-4 flex-col text-left">
-            <h1 class="sm:text-3xl text-2xl font-bold title-font mb-2 text-gray-900">
-                Curators with "{{ $query }}"
+            <h1 class="sm:text-3xl text-2xl font-semibold title-font mb-2 text-gray-900">
+                Curators
             </h1>
             <p class="w-full leading-relaxed text-gray-500 text-lg">
                 {{ $curators->total() }} Results

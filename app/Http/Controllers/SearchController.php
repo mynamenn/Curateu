@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
+    /**
+     * Retrieves categories, collections and curators related to query.
+     */
     public function show(Request $request)
     {
         $query = $request->query('query');

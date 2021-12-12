@@ -49,7 +49,7 @@
 
                         </div>
 
-                        <x-upvote-button :object="$collection" :actionPath="route('collections.likes', $collection->id)"></x-upvote-button>
+                        <x-buttons.upvote-button :object="$collection" :actionPath="route('collections.likes', $collection->id)"></x-buttons.upvote-button>
                     </div>
                 </div>
             @endforeach

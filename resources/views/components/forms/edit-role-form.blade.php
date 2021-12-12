@@ -20,7 +20,7 @@
         @method('PATCH')
         @csrf
         <p class="text-lg font-semibold mb-4">Edit Role</p>
-        <x-auth-validation-errors class="mb-4" :errors="$errors"></x-auth-validation-errors>
+        <x-auths.auth-validation-errors class="mb-4" :errors="$errors"></x-auths.auth-validation-errors>
         <div class="mb-4">
             <select class="js-example-basic-single" required="true" name="role">
                 @foreach ($roles as $roles)

@@ -15,6 +15,7 @@
 </script>
 
 @section('content')
+{{-- Category header --}}
 <div class="w-full bg-cover bg-center mb-4" style="height:22rem; background-image: url({{ $category->photo }});">
     <div class="flex items-center justify-center h-full w-full bg-gray-900 bg-opacity-50">
         <div class="flex-column px-4 rounded-lg overflow-hidden align items-center justify-center text-center">
@@ -45,7 +46,7 @@
 <div
     class="sm:mx-8 mx-2 flex-column pt-10 pb-6 px-4 rounded-lg overflow-hidden">
 
-    <x-banner class="mb-4"></x-banner>
+    <x-success-banner class="mb-4"></x-success-banner>
 
     @if (AuthHelper::canHandleCategory())
     {{-- Edit category form --}}
@@ -54,7 +55,7 @@
         @csrf
         @method('PATCH')
         <p class="text-lg font-semibold mb-4">Edit Category</p>
-        <x-auth-validation-errors class="mb-4" :errors="$errors"></x-auth-validation-errors>
+        <x-auths.auth-validation-errors class="mb-4" :errors="$errors"></x-auths.auth-validation-errors>
         <div class="mb-4">
             <label for="name" class="font-medium text-gray-900 block mb-2">Name</label>
             <input type="text" name="name" id="name" value="{{ $category->name }}"
@@ -96,6 +97,7 @@
         {{ Str::plural('Collection', $collections->total()) }}
     </p>
 
+    {{-- Collections --}}
     @if ($collections->total() > 0)
     <div class="my-4 border-2 border-gray-300 border-opacity-50 rounded-md">
 
@@ -125,8 +127,8 @@
                 </div>
             </div>
 
-            <x-upvote-button :object="$collection" :actionPath="route('collections.likes', $collection->id)">
-            </x-upvote-button>
+            <x-buttons.upvote-button :object="$collection" :actionPath="route('collections.likes', $collection->id)">
+            </x-buttons.upvote-button>
         </div>
         {{-- If no pages and is at last element, don't show hr --}}
         @if (($collections->hasPages() == false && ($index == $collections->count() - 1 || $collections->count())))

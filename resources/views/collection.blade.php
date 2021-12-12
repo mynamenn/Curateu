@@ -115,7 +115,7 @@
 
     {{-- Content --}}
     <div class="sm:mx-8 mx-2">
-        <x-banner class="mb-4"></x-banner>
+        <x-success-banner class="mb-4"></x-success-banner>
         <x-forms.edit-tags-form :tags="$tags" :collection="$collection" :collectionTags="$collection->tags">
         </x-forms.edit-tags-form>
         <div class="flex flex-row mb-4">
@@ -132,14 +132,14 @@
         </div>
 
 
+        {{-- New item form --}}
         @if (AuthHelper::canEditItself($collection->user->id))
-            {{-- New item form --}}
             <form action="{{ route('items.store', $collection) }}" method="post" enctype="multipart/form-data"
                 class="p-4 border-2 mb-4 hidden border-gray-200" id="itemForm">
                 @csrf
                 @method('POST')
                 <p class="text-lg font-semibold mb-4">New Item</p>
-                <x-auth-validation-errors class="mb-4" :errors="$errors"></x-auth-validation-errors>
+                <x-auths.auth-validation-errors class="mb-4" :errors="$errors"></x-auths.auth-validation-errors>
                 <div class="mb-4">
                     <label for="name" class="font-medium text-gray-900 block mb-2">Name</label>
                     <input type="text" name="name" id="name"
@@ -180,6 +180,7 @@
             </form>
         @endif
 
+        {{-- Items --}}
         @if ($items->total() > 0)
             <div class="mt-4 mb-6 border-2 border-gray-300 border-opacity-50 rounded-md">
                 @foreach ($items as $index => $item)
@@ -197,11 +198,11 @@
                             </div>
 
                         </div>
-                        <x-edit-delete-buttons :user="$collection->user" :deletePath="route('items.destroy', $item)"
+                        <x-buttons.edit-delete-buttons :user="$collection->user" :deletePath="route('items.destroy', $item)"
                             :formId="'editItem'.$item->id">
-                        </x-edit-delete-buttons>
-                        <x-upvote-button :object="$item" :actionPath="route('items.likes', $item->id)">
-                        </x-upvote-button>
+                        </x-buttons.edit-delete-buttons>
+                        <x-buttons.upvote-button :object="$item" :actionPath="route('items.likes', $item->id)">
+                        </x-buttons.upvote-button>
                     </div>
 
                     @if (AuthHelper::canEditItself($collection->user->id))
@@ -213,8 +214,8 @@
                                 @method('PATCH')
                                 @csrf
                                 <p class="text-lg font-semibold mb-4">Edit Item</p>
-                                <x-auth-validation-errors class="mb-4" :errors="$errors">
-                                </x-auth-validation-errors>
+                                <x-auths.auth-validation-errors class="mb-4" :errors="$errors">
+                                </x-auths.auth-validation-errors>
                                 <div class="mb-4">
                                     <label for="name" class="font-medium text-gray-900 block mb-2">Name</label>
                                     <input type="text" name="name" id="name" value="{{ $item->name }}"

@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 <script>
-    function categoryClick(route) {
-        location.href = route;
-    }
-
     function showCategoryModal() {
         document.getElementById("categoryForm").style.display = "block";
     }
@@ -35,14 +31,14 @@
 
         @if (AuthHelper::canHandleCategory())
             <div class="px-4">
-                <x-banner class="mb-4"></x-banner>
+                <x-success-banner class="mb-4"></x-success-banner>
                 {{-- New category form --}}
                 <form action="{{ route('categories.store') }}" method="post" enctype="multipart/form-data"
                     class="p-4 border-2 mb-4 hidden border-gray-200" id="categoryForm">
                     @csrf
                     @method('POST')
                     <p class="text-lg font-semibold mb-4">New Category</p>
-                    <x-auth-validation-errors class="mb-4" :errors="$errors"></x-auth-validation-errors>
+                    <x-auths.auth-validation-errors class="mb-4" :errors="$errors"></x-auths.auth-validation-errors>
                     <div class="mb-4">
                         <label for="name" class="font-medium text-gray-900 block mb-2">Name</label>
                         <input type="text" name="name" id="name"

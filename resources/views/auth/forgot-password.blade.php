@@ -2,7 +2,7 @@
 
 @section('content')
     <x-guest-layout>
-        <x-auth-card>
+        <x-auths.auth-card>
             <x-slot name="logo">
                 <a href="/">
                     <x-application-logo class="w-68 h-14 fill-current text-gray-500" />
@@ -14,10 +14,10 @@
             </div>
 
             <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
+            <x-auths.auth-session-status class="mb-4" :status="session('status')" />
 
             <!-- Validation Errors -->
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+            <x-auths.auth-validation-errors class="mb-4" :errors="$errors" />
 
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
@@ -26,16 +26,16 @@
                 <div>
                     <x-label for="email" :value="__('Email')" />
 
-                    <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
+                    <x-forms.input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
                         autofocus />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <x-button>
+                    <x-buttons.button>
                         {{ __('Email Password Reset Link') }}
-                    </x-button>
+                    </x-buttons.button>
                 </div>
             </form>
-        </x-auth-card>
+        </x-auths.auth-card>
     </x-guest-layout>
 @endsection

@@ -1,5 +1,11 @@
 @props(['category'])
 
+<script>
+    function categoryClick(route) {
+        location.href = route;
+    }
+</script>
+
 <button class="p-4 text-left sm:w-1/2 lg:w-1/3 transform hover:-translate-y-1 transition duration-500 ease-in-out"
     onclick="categoryClick('{{ route('categories.show', ['categoryName' => str_replace(' ', '-', $category->name)]) }}')">
     <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden focus:border-black">
